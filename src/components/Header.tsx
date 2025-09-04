@@ -15,12 +15,31 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="flex items-center space-x-1 bg-white px-3 py-2 rounded-lg shadow-lg">
-              <span className="text-gray-700 font-serif font-bold text-lg">BURNS</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" className="text-gray-700">
-                <path d="M10 2c-2 0-3.5 1.5-3.5 3.5 0 1.2.6 2.2 1.5 2.8-.2.6-.6 1.1-1 1.4-.4.3-.8.6-1.3.8-.5.2-1 .3-1.5.3-.6 0-1.2-.1-1.7-.3-.5-.2-.9-.5-1.3-.8-.4-.3-.8-.8-1-1.4.9-.6 1.5-1.6 1.5-2.8C2.5 3.5 4 2 6 2c1 0 1.8.4 2.4 1 .6-.6 1.4-1 2.4-1zm0 1.5c-.8 0-1.5.7-1.5 1.5S9.2 6.5 10 6.5s1.5-.7 1.5-1.5S10.8 3.5 10 3.5zm-4.5 6c.4 0 .8.1 1.1.3.3.2.5.5.6.8.1.3.2.6.2 1 0 .4-.1.7-.2 1-.1.3-.3.6-.6.8-.3.2-.7.3-1.1.3s-.8-.1-1.1-.3c-.3-.2-.5-.5-.6-.8-.1-.3-.2-.6-.2-1 0-.4.1-.7.2-1 .1-.3.3-.6.6-.8.3-.2.7-.3 1.1-.3zm9 0c.4 0 .8.1 1.1.3.3.2.5.5.6.8.1.3.2.6.2 1 0 .4-.1.7-.2 1-.1.3-.3.6-.6.8-.3.2-.7.3-1.1.3s-.8-.1-1.1-.3c-.3-.2-.5-.5-.6-.8-.1-.3-.2-.6-.2-1 0-.4.1-.7.2-1 .1-.3.3-.6.6-.8.3-.2.7-.3 1.1-.3z" fill="currentColor"/>
+            <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-lg shadow-lg">
+              <span className="text-gray-700 font-serif font-bold text-lg tracking-wide">BURNS</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" className="text-gray-700">
+                <g>
+                  {/* Sheep body */}
+                  <ellipse cx="12" cy="14" rx="6" ry="4" fill="currentColor" opacity="0.8"/>
+                  {/* Sheep head */}
+                  <ellipse cx="12" cy="8" rx="3" ry="2.5" fill="currentColor"/>
+                  {/* Sheep legs */}
+                  <rect x="8" y="16" width="1" height="3" fill="currentColor"/>
+                  <rect x="10" y="16" width="1" height="3" fill="currentColor"/>
+                  <rect x="13" y="16" width="1" height="3" fill="currentColor"/>
+                  <rect x="15" y="16" width="1" height="3" fill="currentColor"/>
+                  {/* Sheep ears */}
+                  <ellipse cx="9.5" cy="7" rx="0.8" ry="1.2" fill="currentColor" transform="rotate(-20 9.5 7)"/>
+                  <ellipse cx="14.5" cy="7" rx="0.8" ry="1.2" fill="currentColor" transform="rotate(20 14.5 7)"/>
+                  {/* Wool texture dots */}
+                  <circle cx="9" cy="12" r="0.5" fill="currentColor" opacity="0.6"/>
+                  <circle cx="12" cy="11" r="0.5" fill="currentColor" opacity="0.6"/>
+                  <circle cx="15" cy="12" r="0.5" fill="currentColor" opacity="0.6"/>
+                  <circle cx="10" cy="15" r="0.5" fill="currentColor" opacity="0.6"/>
+                  <circle cx="14" cy="15" r="0.5" fill="currentColor" opacity="0.6"/>
+                </g>
               </svg>
-              <span className="text-gray-700 font-serif font-bold text-lg">FARM</span>
+              <span className="text-gray-700 font-serif font-bold text-lg tracking-wide">FARM</span>
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold">Shop</h1>
