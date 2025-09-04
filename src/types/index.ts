@@ -41,14 +41,16 @@ export interface Accommodation {
 }
 
 export const ACCOMMODATIONS: Accommodation[] = [
-  // VIP Mountain View Cabins
-  { id: 'vip-cabin-1', name: 'VIP Mountain View Cabin 1', type: 'cabin' },
-  { id: 'vip-cabin-2', name: 'VIP Mountain View Cabin 2', type: 'cabin' },
-  { id: 'vip-cabin-3', name: 'VIP Mountain View Cabin 3', type: 'cabin' },
-  { id: 'vip-cabin-4', name: 'VIP Mountain View Cabin 4', type: 'cabin' },
-  { id: 'vip-cabin-5', name: 'VIP Mountain View Cabin 5', type: 'cabin' },
-  { id: 'vip-cabin-6', name: 'VIP Mountain View Cabin 6', type: 'cabin' },
-  { id: 'vip-cabin-7', name: 'VIP Mountain View Cabin 7', type: 'cabin' },
+  // VIP Mountain View Cabins (Pet-Friendly)
+  { id: 'scales-tarn', name: 'Scales Tarn (Pet-Friendly)', type: 'cabin' },
+  { id: 'red-tarn', name: 'Red Tarn (Pet-Friendly)', type: 'cabin' },
+  { id: 'angle-tarn', name: 'Angle Tarn (Pet-Friendly)', type: 'cabin' },
+  { id: 'blind-tarn', name: 'Blind Tarn (Pet-Friendly)', type: 'cabin' },
+  { id: 'sprinkling-tarn', name: 'Sprinkling Tarn (Pet-Friendly)', type: 'cabin' },
+  
+  // VIP Mountain View Cabins (Pet-Free)
+  { id: 'beacon-tarn', name: 'Beacon Tarn (Pet-Free)', type: 'cabin' },
+  { id: 'dock-tarn', name: 'Dock Tarn (Pet-Free)', type: 'cabin' },
   
   // Superior Mountain View Cabins
   { id: 'stickle-tarn', name: 'Stickle Tarn', type: 'cabin' },
