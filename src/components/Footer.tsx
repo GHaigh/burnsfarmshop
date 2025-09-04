@@ -8,10 +8,14 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">BF</span>
+              <div className="flex items-center space-x-1 bg-white px-2 py-1 rounded shadow">
+                <span className="text-gray-700 font-serif font-bold text-sm">BURNS</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" className="text-gray-700">
+                  <path d="M10 2c-2 0-3.5 1.5-3.5 3.5 0 1.2.6 2.2 1.5 2.8-.2.6-.6 1.1-1 1.4-.4.3-.8.6-1.3.8-.5.2-1 .3-1.5.3-.6 0-1.2-.1-1.7-.3-.5-.2-.9-.5-1.3-.8-.4-.3-.8-.8-1-1.4.9-.6 1.5-1.6 1.5-2.8C2.5 3.5 4 2 6 2c1 0 1.8.4 2.4 1 .6-.6 1.4-1 2.4-1zm0 1.5c-.8 0-1.5.7-1.5 1.5S9.2 6.5 10 6.5s1.5-.7 1.5-1.5S10.8 3.5 10 3.5zm-4.5 6c.4 0 .8.1 1.1.3.3.2.5.5.6.8.1.3.2.6.2 1 0 .4-.1.7-.2 1-.1.3-.3.6-.6.8-.3.2-.7.3-1.1.3s-.8-.1-1.1-.3c-.3-.2-.5-.5-.6-.8-.1-.3-.2-.6-.2-1 0-.4.1-.7.2-1 .1-.3.3-.6.6-.8.3-.2.7-.3 1.1-.3zm9 0c.4 0 .8.1 1.1.3.3.2.5.5.6.8.1.3.2.6.2 1 0 .4-.1.7-.2 1-.1.3-.3.6-.6.8-.3.2-.7.3-1.1.3s-.8-.1-1.1-.3c-.3-.2-.5-.5-.6-.8-.1-.3-.2-.6-.2-1 0-.4.1-.7.2-1 .1-.3.3-.6.6-.8.3-.2.7-.3 1.1-.3z" fill="currentColor"/>
+                </svg>
+                <span className="text-gray-700 font-serif font-bold text-sm">FARM</span>
               </div>
-              <h3 className="text-xl font-bold">Burns Farm Shop</h3>
+              <h3 className="text-xl font-bold">Shop</h3>
             </div>
             <p className="text-gray-300 text-sm">
               Your one-stop shop for groceries and gifts delivered directly to your cabin or pitch.

@@ -15,11 +15,15 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-green-800 font-bold text-lg">BF</span>
+            <div className="flex items-center space-x-1 bg-white px-3 py-2 rounded-lg shadow-lg">
+              <span className="text-gray-700 font-serif font-bold text-lg">BURNS</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" className="text-gray-700">
+                <path d="M10 2c-2 0-3.5 1.5-3.5 3.5 0 1.2.6 2.2 1.5 2.8-.2.6-.6 1.1-1 1.4-.4.3-.8.6-1.3.8-.5.2-1 .3-1.5.3-.6 0-1.2-.1-1.7-.3-.5-.2-.9-.5-1.3-.8-.4-.3-.8-.8-1-1.4.9-.6 1.5-1.6 1.5-2.8C2.5 3.5 4 2 6 2c1 0 1.8.4 2.4 1 .6-.6 1.4-1 2.4-1zm0 1.5c-.8 0-1.5.7-1.5 1.5S9.2 6.5 10 6.5s1.5-.7 1.5-1.5S10.8 3.5 10 3.5zm-4.5 6c.4 0 .8.1 1.1.3.3.2.5.5.6.8.1.3.2.6.2 1 0 .4-.1.7-.2 1-.1.3-.3.6-.6.8-.3.2-.7.3-1.1.3s-.8-.1-1.1-.3c-.3-.2-.5-.5-.6-.8-.1-.3-.2-.6-.2-1 0-.4.1-.7.2-1 .1-.3.3-.6.6-.8.3-.2.7-.3 1.1-.3zm9 0c.4 0 .8.1 1.1.3.3.2.5.5.6.8.1.3.2.6.2 1 0 .4-.1.7-.2 1-.1.3-.3.6-.6.8-.3.2-.7.3-1.1.3s-.8-.1-1.1-.3c-.3-.2-.5-.5-.6-.8-.1-.3-.2-.6-.2-1 0-.4.1-.7.2-1 .1-.3.3-.6.6-.8.3-.2.7-.3 1.1-.3z" fill="currentColor"/>
+              </svg>
+              <span className="text-gray-700 font-serif font-bold text-lg">FARM</span>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold">Burns Farm Shop</h1>
+              <h1 className="text-xl font-bold">Shop</h1>
               <p className="text-green-200 text-sm">Campsite Groceries & Gifts</p>
             </div>
           </Link>
