@@ -41,25 +41,21 @@ export interface Accommodation {
 }
 
 export const ACCOMMODATIONS: Accommodation[] = [
-  // VIP Mountain View Cabins
-  { id: 'scales-tarn', name: 'Scales Tarn', type: 'cabin' },
-  { id: 'red-tarn', name: 'Red Tarn', type: 'cabin' },
+  // All Cabins (Alphabetical Order)
   { id: 'angle-tarn', name: 'Angle Tarn', type: 'cabin' },
-  { id: 'blind-tarn', name: 'Blind Tarn', type: 'cabin' },
-  { id: 'sprinkling-tarn', name: 'Sprinkling Tarn', type: 'cabin' },
   { id: 'beacon-tarn', name: 'Beacon Tarn', type: 'cabin' },
-  { id: 'dock-tarn', name: 'Dock Tarn', type: 'cabin' },
-  
-  // Superior Mountain View Cabins
-  { id: 'stickle-tarn', name: 'Stickle Tarn', type: 'cabin' },
-  { id: 'styhead-tarn', name: 'Styhead Tarn', type: 'cabin' },
   { id: 'blea-tarn', name: 'Blea Tarn', type: 'cabin' },
-  
-  // Exclusive Mountain View Cabins
   { id: 'bleaberry-tarn', name: 'Bleaberry Tarn', type: 'cabin' },
-  { id: 'easedale-tarn', name: 'Easedale Tarn', type: 'cabin' },
+  { id: 'blind-tarn', name: 'Blind Tarn', type: 'cabin' },
   { id: 'bowscale-tarn', name: 'Bowscale Tarn', type: 'cabin' },
   { id: 'burnmoor-tarn', name: 'Burnmoor Tarn', type: 'cabin' },
+  { id: 'dock-tarn', name: 'Dock Tarn', type: 'cabin' },
+  { id: 'easedale-tarn', name: 'Easedale Tarn', type: 'cabin' },
+  { id: 'red-tarn', name: 'Red Tarn', type: 'cabin' },
+  { id: 'scales-tarn', name: 'Scales Tarn', type: 'cabin' },
+  { id: 'sprinkling-tarn', name: 'Sprinkling Tarn', type: 'cabin' },
+  { id: 'stickle-tarn', name: 'Stickle Tarn', type: 'cabin' },
+  { id: 'styhead-tarn', name: 'Styhead Tarn', type: 'cabin' },
   
   // Low Rigg View Touring Pitches (1-14)
   { id: 'low-rigg-1', name: 'Low Rigg View Touring Pitch 1', type: 'pitch' },
