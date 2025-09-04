@@ -23,6 +23,33 @@ export default function CheckoutPage() {
   const [deliveryDate, setDeliveryDate] = useState('');
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState<Set<string>>(new Set());
+
+  // Load existing bookings on component mount
+  useEffect(() => {
+    const existingOrders = JSON.parse(localStorage.getItem('burns-farm-orders') || '[]');
+    const booked = new Set<string>();
+    
+    existingOrders.forEach((order: any) => {
+      if (order.deliveryDate && order.deliverySlot) {
+        const slotKey = `${order.deliveryDate}-${order.deliverySlot}`;
+        booked.add(slotKey);
+      }
+    });
+    
+    setBookedSlots(booked);
+  }, []);
+
+  // Reset delivery slot when delivery date changes
+  useEffect(() => {
+    setDeliverySlot('');
+  }, [deliveryDate]);
+
+  // Check if a delivery slot is booked
+  const isSlotBooked = (date: string, slot: string) => {
+    const slotKey = `${date}-${slot}`;
+    return bookedSlots.has(slotKey);
+  };
 
   // Generate delivery date options (today + up to 7 days)
   const getDeliveryDateOptions = () => {
@@ -44,8 +71,8 @@ export default function CheckoutPage() {
       });
       
       // If it's after 7 PM and this is tomorrow (i === 1), disable it
-      // Same day delivery (i === 0) is always available
-      const isDisabled = isAfter7PM && i === 1;
+      // If it's very early morning (before 6 AM) and this is today (i === 0), disable it
+      const isDisabled = (isAfter7PM && i === 1) || (currentHour < 6 && i === 0);
       
       options.push({ 
         value: dateString, 
@@ -97,6 +124,10 @@ export default function CheckoutPage() {
     const existingOrders = JSON.parse(localStorage.getItem('burns-farm-orders') || '[]');
     existingOrders.push(order);
     localStorage.setItem('burns-farm-orders', JSON.stringify(existingOrders));
+
+    // Add this booking to the booked slots
+    const slotKey = `${deliveryDate}-${deliverySlot}`;
+    setBookedSlots(prev => new Set([...prev, slotKey]));
 
     // Redirect to payment page
     router.push(`/checkout/payment?orderId=${order.id}&total=${order.total}`);
@@ -291,15 +322,28 @@ export default function CheckoutPage() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
               >
                 <option value="">Select a time slot...</option>
-                {DELIVERY_SLOTS.map(slot => (
-                  <option key={slot} value={slot}>{slot}</option>
-                ))}
+                {DELIVERY_SLOTS.map(slot => {
+                  const isBooked = deliveryDate ? isSlotBooked(deliveryDate, slot) : false;
+                  return (
+                    <option 
+                      key={slot} 
+                      value={slot}
+                      disabled={isBooked}
+                      className={isBooked ? 'text-gray-400' : ''}
+                    >
+                      {slot} {isBooked ? '(Booked)' : ''}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
             <div className="p-4 bg-green-50 rounded-lg">
               <p className="text-green-800 text-sm">
                 <strong>Next day delivery:</strong> Orders placed before 6 PM will be delivered the following morning.
+              </p>
+              <p className="text-green-700 text-sm mt-1">
+                <strong>Note:</strong> Booked time slots are not available for selection.
               </p>
             </div>
           </div>
