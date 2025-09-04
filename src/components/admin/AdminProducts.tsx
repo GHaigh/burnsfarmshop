@@ -62,7 +62,7 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
       description: formData.description!,
       price: formData.price!,
       category: formData.category!,
-      image: formData.image || '/api/placeholder/300/200',
+      image: formData.image || 'https://via.placeholder.com/300x200/4ade80/ffffff?text=New+Product',
       stock: formData.stock || 0,
       isActive: formData.isActive ?? true,
     };

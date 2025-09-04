@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Burns Farm Shop
+
+A mobile-friendly web application for Burns Farm Campsite that allows customers to order groceries and gifts for delivery to their cabin or pitch.
+
+## Features
+
+### Customer Features
+- **Product Catalog**: Browse groceries, gifts, and essentials with category filtering
+- **Shopping Cart**: Add/remove items with quantity controls
+- **Checkout Process**: 
+  - Select accommodation (cabins and hardstanding pitches from Burns Farm)
+  - Choose delivery time slot
+  - Enter contact details
+  - Order confirmation
+- **Mobile Responsive**: Optimized for mobile devices
+
+### Admin Features
+- **Order Management**: View, filter, and update order status
+- **Product Management**: Add, edit, and delete products
+- **Reports Dashboard**: 
+  - Revenue analytics
+  - Order statistics
+  - Top products
+  - Category performance
+- **Real-time Updates**: Live order tracking and management
+
+## Technology Stack
+
+- **Frontend**: Next.js 14 with TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: React Context API
+- **Charts**: Recharts
+- **Icons**: Heroicons
+- **Deployment**: Vercel
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/GHaigh/burnsfarmshop.git
+cd burnsfarmshop
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                    # Next.js app directory
+│   ├── admin/             # Admin dashboard
+│   ├── basket/            # Shopping cart page
+│   ├── checkout/          # Checkout process
+│   └── page.tsx           # Main shop page
+├── components/            # Reusable components
+│   ├── admin/            # Admin-specific components
+│   ├── Header.tsx        # Site header
+│   ├── Footer.tsx        # Site footer
+│   └── ProductCard.tsx   # Product display component
+├── contexts/             # React contexts
+│   └── CartContext.tsx   # Shopping cart state
+└── types/               # TypeScript type definitions
+    └── index.ts         # Application types
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Accommodation Options
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The app includes the following accommodation options from Burns Farm:
 
-## Deploy on Vercel
+### Cabins
+- Low Rigg View Touring
+- High Rigg View Touring
+- Tewet Campfield
+- Skiddaw Campfield
+- Blease Campfield
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Hardstanding Pitches
+- Hardstanding Pitch 1-5
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Delivery Slots
+
+Orders can be scheduled for delivery in the following time slots:
+- 8:00 AM - 9:00 AM
+- 9:00 AM - 10:00 AM
+- 10:00 AM - 11:00 AM
+- 11:00 AM - 12:00 PM
+- 12:00 PM - 1:00 PM
+- 1:00 PM - 2:00 PM
+- 2:00 PM - 3:00 PM
+- 3:00 PM - 4:00 PM
+
+## Payment Integration
+
+This is a demonstration application. In production, it would integrate with SumUp for payment processing.
+
+## Deployment
+
+The application is configured for deployment on Vercel:
+
+1. Connect your GitHub repository to Vercel
+2. Deploy automatically on push to main branch
+3. Environment variables can be configured in Vercel dashboard
+
+## Demo Data
+
+The application includes mock product data for demonstration purposes. In production, this would be replaced with a real database and API.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+This project is for demonstration purposes.
