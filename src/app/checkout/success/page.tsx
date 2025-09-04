@@ -3,10 +3,18 @@
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { useCart } from '@/contexts/CartContext';
+import { useEffect } from 'react';
 
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId');
+  const { dispatch } = useCart();
+
+  // Clear cart on successful payment
+  useEffect(() => {
+    dispatch({ type: 'CLEAR_CART' });
+  }, [dispatch]);
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -14,11 +22,11 @@ export default function CheckoutSuccessPage() {
         <CheckCircleIcon className="w-16 h-16 text-green-500 mx-auto mb-6" />
         
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Order Confirmed!
+          Payment Successful!
         </h1>
         
         <p className="text-lg text-gray-600 mb-6">
-          Thank you for your order. We'll prepare your items for delivery.
+          Thank you for your order. Your payment has been processed and we'll prepare your items for delivery.
         </p>
 
         {orderId && (

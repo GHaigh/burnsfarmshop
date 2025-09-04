@@ -46,9 +46,6 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate order processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
     // Create order
     const order = {
       id: `ORDER-${Date.now()}`,
@@ -66,11 +63,8 @@ export default function CheckoutPage() {
     existingOrders.push(order);
     localStorage.setItem('burns-farm-orders', JSON.stringify(existingOrders));
 
-    // Clear cart
-    dispatch({ type: 'CLEAR_CART' });
-
-    // Redirect to success page
-    router.push(`/checkout/success?orderId=${order.id}`);
+    // Redirect to payment page
+    router.push(`/checkout/payment?orderId=${order.id}&total=${order.total}`);
   };
 
   const isFormValid = customer.firstName && customer.lastName && customer.email && 
@@ -297,14 +291,8 @@ export default function CheckoutPage() {
               disabled={!isFormValid || isSubmitting}
               className="w-full mt-6 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors"
             >
-              {isSubmitting ? 'Processing Order...' : 'Place Order'}
+              {isSubmitting ? 'Processing...' : 'Continue to Payment'}
             </button>
-
-            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-              <p className="text-blue-800 text-sm">
-                <strong>Payment:</strong> This is a demo. In production, this would integrate with SumUp for secure payment processing.
-              </p>
-            </div>
           </div>
         </div>
       </form>
