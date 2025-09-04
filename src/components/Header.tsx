@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useCart } from '@/contexts/CartContext';
 import { ShoppingCartIcon, HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
@@ -16,14 +15,8 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="relative w-12 h-12">
-              <Image
-                src="/burns-farm-official-logo.png"
-                alt="Burns Farm Logo"
-                fill
-                className="object-contain filter brightness-0 invert"
-                priority
-              />
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
+              <span className="text-green-800 font-bold text-lg">BF</span>
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold">Burns Farm Shop</h1>

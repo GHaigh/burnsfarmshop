@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -9,13 +8,8 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <div className="relative w-10 h-10">
-                <Image
-                  src="/burns-farm-official-logo.png"
-                  alt="Burns Farm Logo"
-                  fill
-                  className="object-contain filter brightness-0 invert"
-                />
+              <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">BF</span>
               </div>
               <h3 className="text-xl font-bold">Burns Farm Shop</h3>
             </div>
