@@ -57,6 +57,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           </div>
         )}
+        {!isOutOfStock && product.stock <= 5 && (
+          <div className="absolute top-2 right-2">
+            <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+              Low Stock
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Product Info */}
@@ -64,9 +71,17 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2">
           {product.name}
         </h3>
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+        <p className="text-gray-600 text-sm mb-2 line-clamp-2">
           {product.description}
         </p>
+        <div className="text-xs text-gray-500 mb-3">
+          Stock: {product.stock} units
+          {product.stock <= 5 && product.stock > 0 && (
+            <span className="ml-2 bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+              Low Stock
+            </span>
+          )}
+        </div>
         
         {/* Category Badge */}
         <div className="mb-3">

@@ -166,6 +166,20 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
                   </span>
                 </div>
               )}
+              {product.stock === 0 && (
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                  <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    Out of Stock
+                  </span>
+                </div>
+              )}
+              {product.stock > 0 && product.stock <= 5 && (
+                <div className="absolute top-2 right-2">
+                  <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                    Low Stock
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="p-4">
@@ -202,8 +216,18 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
                 </span>
               </div>
 
-              <div className="text-sm text-gray-500">
-                Stock: {product.stock} units
+              <div className="text-sm text-gray-500 flex items-center space-x-2">
+                <span>Stock: {product.stock} units</span>
+                {product.stock <= 5 && product.stock > 0 && (
+                  <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">
+                    Low Stock
+                  </span>
+                )}
+                {product.stock === 0 && (
+                  <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
+                    Out of Stock
+                  </span>
+                )}
               </div>
             </div>
           </div>

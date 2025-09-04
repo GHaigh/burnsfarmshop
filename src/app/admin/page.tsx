@@ -6,6 +6,7 @@ import AdminOrders from '@/components/admin/AdminOrders';
 import AdminProducts from '@/components/admin/AdminProducts';
 import AdminReports from '@/components/admin/AdminReports';
 import AdminUsers from '@/components/admin/AdminUsers';
+import AdminAnalytics from '@/components/admin/AdminAnalytics';
 import { 
   ShoppingBagIcon, 
   CubeIcon, 
@@ -245,6 +246,7 @@ export default function AdminPage() {
   const tabs = [
     { id: 'orders', name: 'Orders', icon: ShoppingBagIcon, count: orders.length },
     { id: 'products', name: 'Products', icon: CubeIcon, count: products.length },
+    { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
     { id: 'reports', name: 'Reports', icon: ChartBarIcon },
     { id: 'users', name: 'Users', icon: UserGroupIcon, count: users.length },
   ];
@@ -305,6 +307,9 @@ export default function AdminPage() {
         )}
         {activeTab === 'products' && (
           <AdminProducts products={products} onUpdateProducts={updateProducts} />
+        )}
+        {activeTab === 'analytics' && (
+          <AdminAnalytics orders={orders} products={products} />
         )}
         {activeTab === 'reports' && (
           <AdminReports orders={orders} products={products} />
