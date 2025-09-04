@@ -43,8 +43,9 @@ export default function CheckoutPage() {
         day: 'numeric'
       });
       
+      // If it's after 7 PM and this is today (i === 0), disable it
       // If it's after 7 PM and this is tomorrow (i === 1), disable it
-      const isDisabled = isAfter7PM && i === 1;
+      const isDisabled = isAfter7PM && (i === 0 || i === 1);
       
       options.push({ 
         value: dateString, 
@@ -254,7 +255,7 @@ export default function CheckoutPage() {
               </select>
             </div>
             
-            {/* Explanation for disabled next day option */}
+            {/* Explanation for disabled delivery options */}
             {(() => {
               const now = new Date();
               const currentHour = now.getHours();
@@ -264,7 +265,7 @@ export default function CheckoutPage() {
                 return (
                   <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
                     <p className="text-amber-800 text-sm">
-                      <strong>Note:</strong> Next day delivery is not available after 7:00 PM. 
+                      <strong>Note:</strong> Same-day and next-day delivery are not available after 7:00 PM. 
                       Orders placed after 7:00 PM will be delivered the day after tomorrow.
                     </p>
                   </div>
