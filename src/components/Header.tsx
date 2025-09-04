@@ -10,7 +10,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-green-800 text-white shadow-lg">
+    <header className="bg-green-600 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
@@ -24,17 +24,17 @@ export default function Header() {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold">Shop</h1>
-              <p className="text-green-200 text-sm">Campsite Groceries & Gifts</p>
+              <p className="text-green-100 text-sm">Campsite Groceries & Gifts</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="hover:text-green-200 transition-colors">
+            <Link href="/" className="hover:text-green-100 transition-colors">
               <HomeIcon className="w-5 h-5 inline mr-1" />
               Shop
             </Link>
-            <Link href="/admin" className="hover:text-green-200 transition-colors">
+            <Link href="/admin" className="hover:text-green-100 transition-colors">
               <UserIcon className="w-5 h-5 inline mr-1" />
               Admin
             </Link>

@@ -75,7 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Price and Stock */}
         <div className="flex justify-between items-center mb-4">
-          <span className="text-2xl font-bold text-green-600">
+          <span className="text-2xl font-bold text-green-700">
             £{product.price.toFixed(2)}
           </span>
           <span className="text-sm text-gray-500">
@@ -94,7 +94,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         ) : quantity === 0 ? (
           <button
             onClick={handleAddToCart}
-            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+            className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
           >
             Add to Cart
           </button>
