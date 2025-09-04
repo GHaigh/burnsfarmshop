@@ -18,6 +18,7 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
     description: '',
     price: 0,
     category: 'groceries',
+    image: '',
     stock: 0,
     isActive: true,
   });
@@ -29,6 +30,7 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
       description: '',
       price: 0,
       category: 'groceries',
+      image: '',
       stock: 0,
       isActive: true,
     });
@@ -62,7 +64,7 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
       description: formData.description!,
       price: formData.price!,
       category: formData.category!,
-      image: formData.image || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=300&h=200&fit=crop&crop=center',
+      image: formData.image || 'https://via.placeholder.com/300x200/4ade80/ffffff?text=No+Image',
       stock: formData.stock || 0,
       isActive: formData.isActive ?? true,
     };
@@ -86,6 +88,34 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
               type === 'checkbox' ? (e.target as HTMLInputElement).checked :
               value
     }));
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB');
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file');
+      return;
+    }
+
+    // Create object URL for preview
+    const imageUrl = URL.createObjectURL(file);
+    setFormData(prev => ({
+      ...prev,
+      image: imageUrl
+    }));
+
+    // In a real app, you would upload the file to a server here
+    console.log('File selected:', file.name, 'Size:', file.size, 'Type:', file.type);
+    console.log('Preview URL:', imageUrl);
   };
 
   const categoryColors = {
@@ -237,6 +267,57 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   />
+                </div>
+
+                {/* Image Upload Section */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Product Image
+                  </label>
+                  <div className="space-y-4">
+                    {/* Current Image Preview */}
+                    {formData.image && (
+                      <div className="relative w-32 h-24 bg-gray-200 rounded-lg overflow-hidden">
+                        <Image
+                          src={formData.image}
+                          alt="Product preview"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    
+                    {/* Image URL Input */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                        Image URL
+                      </label>
+                      <input
+                        type="url"
+                        name="image"
+                        value={formData.image || ''}
+                        onChange={handleInputChange}
+                        placeholder="https://example.com/image.jpg"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
+                      />
+                    </div>
+
+                    {/* File Upload */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                        Or Upload Image
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Supported formats: JPG, PNG, GIF, WebP (max 5MB)
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
