@@ -53,10 +53,15 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <div className="text-gray-300 text-sm space-y-2">
-              <p>Burns Farm Campsite</p>
-              <p>Lake District, Cumbria</p>
-              <p>Email: shop@burns-farm.co.uk</p>
-              <p>Phone: 01768 123456</p>
+              <p className="font-medium">Burns Farm Caravan & Campsite</p>
+              <p>St Johns-in-the-Vale</p>
+              <p>Keswick, Cumbria</p>
+              <p>CA12 4RR</p>
+              <p>United Kingdom</p>
+              <div className="mt-3 space-y-1">
+                <p>Email: shop@burns-farm.co.uk</p>
+                <p>Phone: 017687 79112</p>
+              </div>
             </div>
           </div>
         </div>
