@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -10,14 +9,15 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <div className="bg-white px-2 py-1 rounded shadow">
-                <Image
+                <img
                   src="/burns-farm-logo.png"
                   alt="Burns Farm Logo"
-                  width={150}
-                  height={45}
                   className="h-8 w-auto"
                   onError={(e) => {
                     console.error('Image failed to load:', e);
+                    // Fallback to text
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement.innerHTML = '<span class="text-gray-700 font-serif font-bold text-sm">BURNS FARM</span>';
                   }}
                 />
               </div>
