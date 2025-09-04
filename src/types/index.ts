@@ -93,12 +93,10 @@ export const ACCOMMODATIONS: Accommodation[] = [
 ];
 
 export const DELIVERY_SLOTS = [
-  '8:00 AM - 9:00 AM',
-  '9:00 AM - 10:00 AM',
-  '10:00 AM - 11:00 AM',
-  '11:00 AM - 12:00 PM',
-  '12:00 PM - 1:00 PM',
-  '1:00 PM - 2:00 PM',
-  '2:00 PM - 3:00 PM',
-  '3:00 PM - 4:00 PM',
+  '8:30 AM - 8:45 AM',
+  '8:45 AM - 9:00 AM',
+  '9:00 AM - 9:15 AM',
+  '9:15 AM - 9:30 AM',
+  '9:30 AM - 9:45 AM',
+  '9:45 AM - 10:00 AM',
 ];
