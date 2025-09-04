@@ -64,7 +64,7 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
       description: formData.description!,
       price: formData.price!,
       category: formData.category!,
-      image: formData.image || 'https://via.placeholder.com/300x200/4ade80/ffffff?text=No+Image',
+      image: formData.image || 'https://picsum.photos/300/200?random=999',
       stock: formData.stock || 0,
       isActive: formData.isActive ?? true,
     };
@@ -150,7 +150,13 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
                 className="object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = `https://via.placeholder.com/300x200/4ade80/ffffff?text=${encodeURIComponent(product.name)}`;
+                  const svg = `
+                    <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="300" height="200" fill="#4ade80"/>
+                      <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="18" fill="white" text-anchor="middle" dy=".3em">${product.name}</text>
+                    </svg>
+                  `;
+                  target.src = `data:image/svg+xml;base64,${btoa(svg)}`;
                 }}
               />
               {!product.isActive && (
