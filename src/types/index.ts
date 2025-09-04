@@ -41,12 +41,26 @@ export interface Accommodation {
 }
 
 export const ACCOMMODATIONS: Accommodation[] = [
-  // Cabins
-  { id: 'low-rigg-view', name: 'Low Rigg View', type: 'cabin' },
-  { id: 'high-rigg-view', name: 'High Rigg View', type: 'cabin' },
-  { id: 'tewet-campfield', name: 'Tewet Campfield', type: 'cabin' },
-  { id: 'skiddaw-campfield', name: 'Skiddaw Campfield', type: 'cabin' },
-  { id: 'blease-campfield', name: 'Blease Campfield', type: 'cabin' },
+  // VIP Mountain View Cabins
+  { id: 'vip-cabin-1', name: 'VIP Mountain View Cabin 1', type: 'cabin' },
+  { id: 'vip-cabin-2', name: 'VIP Mountain View Cabin 2', type: 'cabin' },
+  { id: 'vip-cabin-3', name: 'VIP Mountain View Cabin 3', type: 'cabin' },
+  { id: 'vip-cabin-4', name: 'VIP Mountain View Cabin 4', type: 'cabin' },
+  { id: 'vip-cabin-5', name: 'VIP Mountain View Cabin 5', type: 'cabin' },
+  { id: 'vip-cabin-6', name: 'VIP Mountain View Cabin 6', type: 'cabin' },
+  { id: 'vip-cabin-7', name: 'VIP Mountain View Cabin 7', type: 'cabin' },
+  
+  // Superior Mountain View Cabins
+  { id: 'stickle-tarn', name: 'Stickle Tarn', type: 'cabin' },
+  { id: 'styhead-tarn', name: 'Styhead Tarn', type: 'cabin' },
+  { id: 'blea-tarn', name: 'Blea Tarn', type: 'cabin' },
+  
+  // Exclusive Mountain View Cabins
+  { id: 'bleaberry-tarn', name: 'Bleaberry Tarn', type: 'cabin' },
+  { id: 'easedale-tarn', name: 'Easedale Tarn', type: 'cabin' },
+  { id: 'bowscale-tarn', name: 'Bowscale Tarn', type: 'cabin' },
+  { id: 'burnmoor-tarn', name: 'Burnmoor Tarn', type: 'cabin' },
+  
   // Hardstanding Pitches Only
   { id: 'hardstanding-1', name: 'Hardstanding Pitch 1', type: 'pitch' },
   { id: 'hardstanding-2', name: 'Hardstanding Pitch 2', type: 'pitch' },
