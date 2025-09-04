@@ -27,9 +27,23 @@ export default function AdminPage() {
   useEffect(() => {
     // Load data from localStorage
     const savedOrders = JSON.parse(localStorage.getItem('burns-farm-orders') || '[]');
-    const savedProducts = JSON.parse(localStorage.getItem('burns-farm-products') || '[]');
+    let savedProducts = JSON.parse(localStorage.getItem('burns-farm-products') || '[]');
     const savedUsers = JSON.parse(localStorage.getItem('burns-farm-users') || '[]');
     const savedInvitations = JSON.parse(localStorage.getItem('burns-farm-invitations') || '[]');
+    
+    // Migrate old Unsplash URLs to Picsum
+    const updatedProducts = savedProducts.map((product: any) => {
+      if (product.image && product.image.includes('images.unsplash.com')) {
+        const randomId = Math.floor(Math.random() * 1000);
+        return { ...product, image: `https://picsum.photos/300/200?random=${randomId}` };
+      }
+      return product;
+    });
+    
+    if (JSON.stringify(updatedProducts) !== JSON.stringify(savedProducts)) {
+      localStorage.setItem('burns-farm-products', JSON.stringify(updatedProducts));
+      savedProducts = updatedProducts;
+    }
     
     // If no users saved, use mock data
     if (savedUsers.length === 0) {
