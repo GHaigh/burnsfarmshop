@@ -20,8 +20,32 @@ export default function CheckoutPage() {
   });
   
   const [deliverySlot, setDeliverySlot] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState('');
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Generate delivery date options (today + up to 7 days)
+  const getDeliveryDateOptions = () => {
+    const options = [];
+    const today = new Date();
+    
+    for (let i = 0; i <= 7; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      
+      const dateString = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+      const displayDate = date.toLocaleDateString('en-GB', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      
+      options.push({ value: dateString, label: displayDate });
+    }
+    
+    return options;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -52,6 +76,7 @@ export default function CheckoutPage() {
       customer,
       items: state.items,
       total: state.total,
+      deliveryDate,
       deliverySlot,
       status: 'pending' as const,
       createdAt: new Date(),
@@ -68,7 +93,7 @@ export default function CheckoutPage() {
   };
 
   const isFormValid = customer.firstName && customer.lastName && customer.email && 
-                     customer.phone && customer.accommodation && deliverySlot;
+                     customer.phone && customer.accommodation && deliveryDate && deliverySlot;
 
   if (state.items.length === 0) {
     return (
@@ -187,6 +212,29 @@ export default function CheckoutPage() {
                     <option key={acc.id} value={acc.id}>{acc.name}</option>
                   ))}
                 </optgroup>
+              </select>
+            </div>
+          </div>
+
+          {/* Delivery Date */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Delivery Date</h2>
+            
+            <div className="mb-4">
+              <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-700 mb-1">
+                Choose delivery date *
+              </label>
+              <select
+                id="deliveryDate"
+                value={deliveryDate}
+                onChange={(e) => setDeliveryDate(e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              >
+                <option value="">Select a delivery date...</option>
+                {getDeliveryDateOptions().map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
               </select>
             </div>
           </div>

@@ -134,7 +134,7 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                         {order.customer.accommodation}
                       </div>
                       <div className="text-sm text-gray-500">
-                        {order.deliverySlot}
+                        {order.deliveryDate} - {order.deliverySlot}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -215,7 +215,7 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                 <div>
                   <label className="text-sm font-medium text-gray-500">Delivery</label>
                   <p className="text-sm">{selectedOrder.customer.accommodation}</p>
-                  <p className="text-sm text-gray-600">{selectedOrder.deliverySlot}</p>
+                  <p className="text-sm text-gray-600">{selectedOrder.deliveryDate} - {selectedOrder.deliverySlot}</p>
                 </div>
 
                 <div>

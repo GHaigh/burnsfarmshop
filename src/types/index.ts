@@ -28,6 +28,7 @@ export interface Order {
   customer: Customer;
   items: CartItem[];
   total: number;
+  deliveryDate: string;
   deliverySlot: string;
   status: 'pending' | 'confirmed' | 'preparing' | 'ready' | 'delivered' | 'cancelled';
   createdAt: Date;
