@@ -13,12 +13,6 @@ export default function Footer() {
                   src="/burns-farm-logo.png"
                   alt="Burns Farm Logo"
                   className="h-8 w-auto"
-                  onError={(e) => {
-                    console.error('Image failed to load:', e);
-                    // Fallback to text
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement.innerHTML = '<span class="text-gray-700 font-serif font-bold text-sm">BURNS FARM</span>';
-                  }}
                 />
               </div>
               <h3 className="text-xl font-bold">Shop</h3>

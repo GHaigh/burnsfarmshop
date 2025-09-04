@@ -20,12 +20,6 @@ export default function Header() {
                 src="/burns-farm-logo.png"
                 alt="Burns Farm Logo"
                 className="h-12 w-auto"
-                onError={(e) => {
-                  console.error('Image failed to load:', e);
-                  // Fallback to text
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement.innerHTML = '<span class="text-gray-700 font-serif font-bold text-lg">BURNS FARM</span>';
-                }}
               />
             </div>
             <div className="hidden sm:block">
