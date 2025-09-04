@@ -8,7 +8,7 @@ import {
   CheckCircleIcon, 
   XCircleIcon,
   ClockIcon,
-  TruckIcon
+  UserIcon
 } from '@heroicons/react/24/outline';
 
 interface AdminOrdersProps {
@@ -30,7 +30,7 @@ const statusIcons = {
   confirmed: CheckCircleIcon,
   preparing: ClockIcon,
   ready: CheckCircleIcon,
-  delivered: TruckIcon,
+  delivered: UserIcon,
   cancelled: XCircleIcon,
 };
 
