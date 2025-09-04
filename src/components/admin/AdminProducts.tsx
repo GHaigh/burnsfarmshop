@@ -64,7 +64,7 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
       description: formData.description!,
       price: formData.price!,
       category: formData.category!,
-      image: formData.image || 'https://via.placeholder.com/300x200/4ade80/ffffff?text=No+Image',
+      image: formData.image || 'https://picsum.photos/300/200?random=999',
       stock: formData.stock || 0,
       isActive: formData.isActive ?? true,
     };
@@ -150,7 +150,7 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
                 className="object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = `https://via.placeholder.com/300x200/4ade80/ffffff?text=${encodeURIComponent(product.name)}`;
+                  target.src = `https://picsum.photos/300/200?random=${product.id}`;
                 }}
               />
               {!product.isActive && (
