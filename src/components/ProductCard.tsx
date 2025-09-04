@@ -41,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           onError={(e) => {
             // Fallback to a placeholder if image fails to load
             const target = e.target as HTMLImageElement;
-            target.src = `https://picsum.photos/300/200?random=${product.id}`;
+            target.src = `https://via.placeholder.com/300x200/4ade80/ffffff?text=${encodeURIComponent(product.name)}`;
           }}
         />
         {isOutOfStock && (
