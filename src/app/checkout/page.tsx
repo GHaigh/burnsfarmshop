@@ -340,7 +340,7 @@ export default function CheckoutPage() {
 
             <div className="p-4 bg-green-50 rounded-lg">
               <p className="text-green-800 text-sm">
-                <strong>Next day delivery:</strong> Orders placed before 6 PM will be delivered the following morning.
+                <strong>Next day delivery:</strong> Orders placed before 7 PM will be delivered the following morning.
               </p>
               <p className="text-green-700 text-sm mt-1">
                 <strong>Note:</strong> Booked time slots are not available for selection.
