@@ -8,7 +8,9 @@ import {
   CheckCircleIcon, 
   XCircleIcon,
   ClockIcon,
-  UserIcon
+  UserIcon,
+  MagnifyingGlassIcon,
+  FunnelIcon
 } from '@heroicons/react/24/outline';
 
 interface AdminOrdersProps {
@@ -37,6 +39,8 @@ const statusIcons = {
 export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps) {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [dateFilter, setDateFilter] = useState('all');
   const [notificationStatus, setNotificationStatus] = useState<{ [orderId: string]: 'sending' | 'sent' | null }>({});
 
   // Mock notification functions (in a real app, these would call actual APIs)
@@ -95,9 +99,49 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
     }
   };
 
-  const filteredOrders = statusFilter === 'all' 
-    ? orders 
-    : orders.filter(order => order.status === statusFilter);
+  const filteredOrders = orders.filter(order => {
+    // Status filter
+    if (statusFilter !== 'all' && order.status !== statusFilter) {
+      return false;
+    }
+    
+    // Search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      const matchesSearch = 
+        order.id.toLowerCase().includes(query) ||
+        order.customer.firstName.toLowerCase().includes(query) ||
+        order.customer.lastName.toLowerCase().includes(query) ||
+        order.customer.email.toLowerCase().includes(query) ||
+        order.customer.accommodation.toLowerCase().includes(query);
+      
+      if (!matchesSearch) {
+        return false;
+      }
+    }
+    
+    // Date filter
+    if (dateFilter !== 'all') {
+      const orderDate = new Date(order.createdAt);
+      const today = new Date();
+      
+      switch (dateFilter) {
+        case 'today':
+          if (orderDate.toDateString() !== today.toDateString()) return false;
+          break;
+        case 'week':
+          const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+          if (orderDate < weekAgo) return false;
+          break;
+        case 'month':
+          const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+          if (orderDate < monthAgo) return false;
+          break;
+      }
+    }
+    
+    return true;
+  });
 
   const sortedOrders = [...filteredOrders].sort((a, b) => 
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -106,22 +150,49 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
   return (
     <div className="space-y-6">
       {/* Filters */}
-      <div className="flex flex-wrap gap-4 items-center justify-between">
-        <div className="flex gap-2">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-          >
-            <option value="all">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="preparing">Preparing</option>
-            <option value="ready">Ready</option>
-            <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
+      <div className="space-y-4">
+        {/* Search */}
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search orders by ID, customer name, email, or accommodation..."
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+          />
         </div>
+        
+        {/* Filters */}
+        <div className="flex flex-wrap gap-4 items-center justify-between">
+          <div className="flex gap-2">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            >
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="preparing">Preparing</option>
+              <option value="ready">Ready</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            >
+              <option value="all">All Dates</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+          </div>
         
         <div className="text-sm text-gray-600">
           {filteredOrders.length} order{filteredOrders.length !== 1 ? 's' : ''} found

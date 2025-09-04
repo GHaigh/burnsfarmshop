@@ -20,7 +20,7 @@ export default function Header() {
                 src="/burns-farm-logo.png"
                 alt="Burns Farm Logo"
                 className="h-12 w-auto"
-              />
+              /> 
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold">Shop</h1>
@@ -42,6 +42,17 @@ export default function Header() {
 
           {/* Cart and Mobile Menu */}
           <div className="flex items-center space-x-4">
+            {/* Orders */}
+            <Link 
+              href="/orders" 
+              className="p-2 hover:bg-green-700 rounded-lg transition-colors"
+              title="Order History"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </Link>
+            
             {/* Cart */}
             <Link 
               href="/basket" 

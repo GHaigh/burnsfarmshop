@@ -125,6 +125,20 @@ export default function CheckoutPage() {
     existingOrders.push(order);
     localStorage.setItem('burns-farm-orders', JSON.stringify(existingOrders));
 
+    // Update product stock levels
+    const existingProducts = JSON.parse(localStorage.getItem('burns-farm-products') || '[]');
+    const updatedProducts = existingProducts.map((product: any) => {
+      const orderItem = state.items.find(item => item.product.id === product.id);
+      if (orderItem) {
+        return {
+          ...product,
+          stock: Math.max(0, product.stock - orderItem.quantity)
+        };
+      }
+      return product;
+    });
+    localStorage.setItem('burns-farm-products', JSON.stringify(updatedProducts));
+
     // Add this booking to the booked slots
     const slotKey = `${deliveryDate}-${deliverySlot}`;
     setBookedSlots(prev => new Set([...prev, slotKey]));
@@ -133,8 +147,10 @@ export default function CheckoutPage() {
     router.push(`/checkout/payment?orderId=${order.id}&total=${order.total}`);
   };
 
+  const MINIMUM_ORDER = 5.00; // £5 minimum order
   const isFormValid = customer.firstName && customer.lastName && customer.email && 
-                     customer.phone && customer.accommodation && deliveryDate && deliverySlot;
+                     customer.phone && customer.accommodation && deliveryDate && deliverySlot &&
+                     state.total >= MINIMUM_ORDER;
 
   if (state.items.length === 0) {
     return (
@@ -411,6 +427,14 @@ export default function CheckoutPage() {
                   <span>Total</span>
                   <span>£{state.total.toFixed(2)}</span>
                 </div>
+                {state.total < MINIMUM_ORDER && (
+                  <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                    <p className="text-amber-800 text-sm">
+                      <strong>Minimum order:</strong> £{MINIMUM_ORDER.toFixed(2)} required. 
+                      Add £{(MINIMUM_ORDER - state.total).toFixed(2)} more to proceed.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 

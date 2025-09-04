@@ -74,8 +74,8 @@ export default function PaymentPage() {
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 3000));
 
-    // Redirect to success page
-    router.push(`/checkout/success?orderId=${orderId}`);
+    // Redirect to confirmation page
+    router.push(`/checkout/confirmation?orderId=${orderId}`);
   };
 
   const isFormValid = cardDetails.number.length >= 19 && 

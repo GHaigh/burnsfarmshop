@@ -5,6 +5,7 @@ import { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
 import CategoryFilter from '@/components/CategoryFilter';
 import { useCart } from '@/contexts/CartContext';
+import ProductSearch from '@/components/ProductSearch';
 
 // Mock product data
 const MOCK_PRODUCTS: Product[] = [
@@ -137,15 +138,39 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(MOCK_PRODUCTS);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const { state } = useCart();
 
   useEffect(() => {
-    if (selectedCategory === 'all') {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(products.filter(product => product.category === selectedCategory));
+    // Load products from localStorage or use mock data
+    const savedProducts = JSON.parse(localStorage.getItem('burns-farm-products') || '[]');
+    if (savedProducts.length > 0) {
+      setProducts(savedProducts);
     }
-  }, [selectedCategory, products]);
+  }, []);
+
+  useEffect(() => {
+    let filtered = products;
+
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(product => product.category === selectedCategory);
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter(product => 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    setFilteredProducts(filtered);
+  }, [selectedCategory, products, searchQuery]);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -167,11 +192,16 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Category Filter */}
-      <CategoryFilter 
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
+      {/* Search and Filter */}
+      <div className="mb-8 space-y-4">
+        <div className="max-w-md mx-auto">
+          <ProductSearch onSearch={handleSearch} />
+        </div>
+        <CategoryFilter 
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
+      </div>
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
