@@ -27,11 +27,13 @@ export default function CheckoutPage() {
   // Generate delivery date options (today + up to 7 days)
   const getDeliveryDateOptions = () => {
     const options = [];
-    const today = new Date();
+    const now = new Date();
+    const currentHour = now.getHours();
+    const isAfter7PM = currentHour >= 19; // 7:00 PM
     
     for (let i = 0; i <= 7; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
+      const date = new Date(now);
+      date.setDate(now.getDate() + i);
       
       const dateString = date.toISOString().split('T')[0]; // YYYY-MM-DD format
       const displayDate = date.toLocaleDateString('en-GB', {
@@ -41,7 +43,14 @@ export default function CheckoutPage() {
         day: 'numeric'
       });
       
-      options.push({ value: dateString, label: displayDate });
+      // If it's after 7 PM and this is tomorrow (i === 1), disable it
+      const isDisabled = isAfter7PM && i === 1;
+      
+      options.push({ 
+        value: dateString, 
+        label: displayDate,
+        disabled: isDisabled
+      });
     }
     
     return options;
@@ -233,10 +242,36 @@ export default function CheckoutPage() {
               >
                 <option value="">Select a delivery date...</option>
                 {getDeliveryDateOptions().map(option => (
-                  <option key={option.value} value={option.value}>{option.label}</option>
+                  <option 
+                    key={option.value} 
+                    value={option.value}
+                    disabled={option.disabled}
+                    className={option.disabled ? 'text-gray-400 bg-gray-100' : ''}
+                  >
+                    {option.label}
+                  </option>
                 ))}
               </select>
             </div>
+            
+            {/* Explanation for disabled next day option */}
+            {(() => {
+              const now = new Date();
+              const currentHour = now.getHours();
+              const isAfter7PM = currentHour >= 19;
+              
+              if (isAfter7PM) {
+                return (
+                  <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                    <p className="text-amber-800 text-sm">
+                      <strong>Note:</strong> Next day delivery is not available after 7:00 PM. 
+                      Orders placed after 7:00 PM will be delivered the day after tomorrow.
+                    </p>
+                  </div>
+                );
+              }
+              return null;
+            })()}
           </div>
 
           {/* Delivery Slot */}
