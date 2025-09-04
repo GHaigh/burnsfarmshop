@@ -42,12 +42,12 @@ export interface Accommodation {
 
 export const ACCOMMODATIONS: Accommodation[] = [
   // Cabins
-  { id: 'low-rigg-view', name: 'Low Rigg View Touring', type: 'cabin' },
-  { id: 'high-rigg-view', name: 'High Rigg View Touring', type: 'cabin' },
+  { id: 'low-rigg-view', name: 'Low Rigg View', type: 'cabin' },
+  { id: 'high-rigg-view', name: 'High Rigg View', type: 'cabin' },
   { id: 'tewet-campfield', name: 'Tewet Campfield', type: 'cabin' },
   { id: 'skiddaw-campfield', name: 'Skiddaw Campfield', type: 'cabin' },
   { id: 'blease-campfield', name: 'Blease Campfield', type: 'cabin' },
-  // Pitches
+  // Hardstanding Pitches Only
   { id: 'hardstanding-1', name: 'Hardstanding Pitch 1', type: 'pitch' },
   { id: 'hardstanding-2', name: 'Hardstanding Pitch 2', type: 'pitch' },
   { id: 'hardstanding-3', name: 'Hardstanding Pitch 3', type: 'pitch' },
