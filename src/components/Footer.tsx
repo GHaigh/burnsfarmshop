@@ -8,7 +8,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <div className="bg-white px-2 py-1 rounded shadow">
+              <div className="px-2 py-1">
                 <img
                   src="/burns-farm-logo.png"
                   alt="Burns Farm Logo"

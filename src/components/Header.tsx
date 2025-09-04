@@ -15,7 +15,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="bg-white px-4 py-2 rounded-lg shadow-lg">
+            <div className="px-2 py-1">
               <img
                 src="/burns-farm-logo.png"
                 alt="Burns Farm Logo"
