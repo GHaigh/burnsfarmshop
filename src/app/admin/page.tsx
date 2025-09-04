@@ -1,29 +1,78 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Order, Product } from '@/types';
+import { Order, Product, User, UserInvitation } from '@/types';
 import AdminOrders from '@/components/admin/AdminOrders';
 import AdminProducts from '@/components/admin/AdminProducts';
 import AdminReports from '@/components/admin/AdminReports';
+import AdminUsers from '@/components/admin/AdminUsers';
 import { 
   ShoppingBagIcon, 
   CubeIcon, 
   ChartBarIcon,
+  UserGroupIcon,
   PlusIcon 
 } from '@heroicons/react/24/outline';
 
-type AdminTab = 'orders' | 'products' | 'reports';
+type AdminTab = 'orders' | 'products' | 'reports' | 'users';
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<AdminTab>('orders');
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [invitations, setInvitations] = useState<UserInvitation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Load data from localStorage
     const savedOrders = JSON.parse(localStorage.getItem('burns-farm-orders') || '[]');
     const savedProducts = JSON.parse(localStorage.getItem('burns-farm-products') || '[]');
+    const savedUsers = JSON.parse(localStorage.getItem('burns-farm-users') || '[]');
+    const savedInvitations = JSON.parse(localStorage.getItem('burns-farm-invitations') || '[]');
+    
+    // If no users saved, use mock data
+    if (savedUsers.length === 0) {
+      const mockUsers: User[] = [
+        {
+          id: '1',
+          email: 'admin@burnsfarm.co.uk',
+          firstName: 'John',
+          lastName: 'Smith',
+          role: 'admin',
+          status: 'active',
+          invitedAt: new Date('2024-01-01'),
+          joinedAt: new Date('2024-01-01'),
+          lastLogin: new Date(),
+        },
+        {
+          id: '2',
+          email: 'manager@burnsfarm.co.uk',
+          firstName: 'Sarah',
+          lastName: 'Johnson',
+          role: 'manager',
+          status: 'active',
+          invitedAt: new Date('2024-01-15'),
+          joinedAt: new Date('2024-01-16'),
+          lastLogin: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+        },
+      ];
+      setUsers(mockUsers);
+      localStorage.setItem('burns-farm-users', JSON.stringify(mockUsers));
+    } else {
+      setUsers(savedUsers.map((user: any) => ({
+        ...user,
+        invitedAt: new Date(user.invitedAt),
+        joinedAt: user.joinedAt ? new Date(user.joinedAt) : undefined,
+        lastLogin: user.lastLogin ? new Date(user.lastLogin) : undefined,
+      })));
+    }
+
+    setInvitations(savedInvitations.map((invitation: any) => ({
+      ...invitation,
+      invitedAt: new Date(invitation.invitedAt),
+      expiresAt: new Date(invitation.expiresAt),
+    })));
     
     // If no products saved, use mock data
     if (savedProducts.length === 0) {
@@ -169,10 +218,21 @@ export default function AdminPage() {
     localStorage.setItem('burns-farm-products', JSON.stringify(updatedProducts));
   };
 
+  const updateUsers = (updatedUsers: User[]) => {
+    setUsers(updatedUsers);
+    localStorage.setItem('burns-farm-users', JSON.stringify(updatedUsers));
+  };
+
+  const updateInvitations = (updatedInvitations: UserInvitation[]) => {
+    setInvitations(updatedInvitations);
+    localStorage.setItem('burns-farm-invitations', JSON.stringify(updatedInvitations));
+  };
+
   const tabs = [
     { id: 'orders', name: 'Orders', icon: ShoppingBagIcon, count: orders.length },
     { id: 'products', name: 'Products', icon: CubeIcon, count: products.length },
     { id: 'reports', name: 'Reports', icon: ChartBarIcon },
+    { id: 'users', name: 'Users', icon: UserGroupIcon, count: users.length },
   ];
 
   if (isLoading) {
@@ -234,6 +294,14 @@ export default function AdminPage() {
         )}
         {activeTab === 'reports' && (
           <AdminReports orders={orders} products={products} />
+        )}
+        {activeTab === 'users' && (
+          <AdminUsers 
+            users={users} 
+            invitations={invitations} 
+            onUpdateUsers={updateUsers} 
+            onUpdateInvitations={updateInvitations} 
+          />
         )}
       </div>
     </div>

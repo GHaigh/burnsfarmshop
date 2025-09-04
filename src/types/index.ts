@@ -41,6 +41,29 @@ export interface Accommodation {
   type: 'cabin' | 'pitch';
 }
 
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: 'admin' | 'manager' | 'staff';
+  status: 'active' | 'pending' | 'inactive';
+  invitedAt: Date;
+  joinedAt?: Date;
+  lastLogin?: Date;
+}
+
+export interface UserInvitation {
+  id: string;
+  email: string;
+  role: 'admin' | 'manager' | 'staff';
+  invitedBy: string;
+  invitedAt: Date;
+  expiresAt: Date;
+  status: 'pending' | 'accepted' | 'expired';
+  token: string;
+}
+
 export const ACCOMMODATIONS: Accommodation[] = [
   // All Cabins (Alphabetical Order)
   { id: 'angle-tarn', name: 'Angle Tarn', type: 'cabin' },
