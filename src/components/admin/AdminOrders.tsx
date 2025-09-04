@@ -37,12 +37,62 @@ const statusIcons = {
 export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps) {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [notificationStatus, setNotificationStatus] = useState<{ [orderId: string]: 'sending' | 'sent' | null }>({});
+
+  // Mock notification functions (in a real app, these would call actual APIs)
+  const sendDeliveryConfirmation = async (order: Order) => {
+    const { customer, deliveryDate, deliverySlot, items, total } = order;
+    
+    // Set sending status
+    setNotificationStatus(prev => ({ ...prev, [order.id]: 'sending' }));
+    
+    // Mock SMS sending
+    console.log(`📱 SMS sent to ${customer.phone}:`);
+    console.log(`Your Burns Farm Shop order has been delivered! Order #${order.id} delivered on ${deliveryDate} at ${deliverySlot}. Total: £${total.toFixed(2)}. Thank you for choosing Burns Farm!`);
+    
+    // Mock Email sending
+    console.log(`📧 Email sent to ${customer.email}:`);
+    console.log(`Subject: Your Burns Farm Shop Order Has Been Delivered!`);
+    console.log(`Dear ${customer.firstName} ${customer.lastName},`);
+    console.log(`Your order #${order.id} has been successfully delivered to ${customer.accommodation} on ${deliveryDate} at ${deliverySlot}.`);
+    console.log(`Items delivered:`);
+    items.forEach(item => {
+      console.log(`- ${item.product.name} x${item.quantity} - £${(item.product.price * item.quantity).toFixed(2)}`);
+    });
+    console.log(`Total: £${total.toFixed(2)}`);
+    console.log(`Thank you for choosing Burns Farm Shop! We hope you enjoy your groceries and gifts.`);
+    console.log(`Best regards,`);
+    console.log(`The Burns Farm Team`);
+    
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Set sent status
+    setNotificationStatus(prev => ({ ...prev, [order.id]: 'sent' }));
+    
+    // Clear status after 3 seconds
+    setTimeout(() => {
+      setNotificationStatus(prev => ({ ...prev, [order.id]: null }));
+    }, 3000);
+    
+    // In a real app, you would call actual APIs here:
+    // await sendSMS(customer.phone, smsMessage);
+    // await sendEmail(customer.email, emailSubject, emailBody);
+  };
 
   const updateOrderStatus = (orderId: string, newStatus: Order['status']) => {
     const updatedOrders = orders.map(order =>
       order.id === orderId ? { ...order, status: newStatus } : order
     );
     onUpdateOrders(updatedOrders);
+    
+    // If status changed to delivered, send confirmation
+    if (newStatus === 'delivered') {
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        sendDeliveryConfirmation(order);
+      }
+    }
   };
 
   const filteredOrders = statusFilter === 'all' 
@@ -166,6 +216,23 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                           <option value="delivered">Delivered</option>
                           <option value="cancelled">Cancelled</option>
                         </select>
+                        {/* Notification status indicator */}
+                        {notificationStatus[order.id] && (
+                          <div className="flex items-center space-x-1">
+                            {notificationStatus[order.id] === 'sending' && (
+                              <div className="flex items-center space-x-1 text-blue-600">
+                                <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-600"></div>
+                                <span className="text-xs">Sending...</span>
+                              </div>
+                            )}
+                            {notificationStatus[order.id] === 'sent' && (
+                              <div className="flex items-center space-x-1 text-green-600">
+                                <CheckCircleIcon className="w-3 h-3" />
+                                <span className="text-xs">Sent!</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </td>
                   </tr>
