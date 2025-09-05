@@ -94,12 +94,12 @@ export default function CheckoutPage() {
   };
 
   const handleAccommodationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const accommodationId = e.target.value;
-    const accommodation = ACCOMMODATIONS.find(acc => acc.id === accommodationId);
+    const accommodationName = e.target.value;
+    const accommodation = ACCOMMODATIONS.find(acc => acc.name === accommodationName);
     
     setCustomer(prev => ({
       ...prev,
-      accommodation: accommodation?.name || accommodationId, // Store the proper name instead of ID
+      accommodation: accommodationName, // Store the name directly
       accommodationType: accommodation?.type || 'cabin'
     }));
   };
@@ -265,12 +265,12 @@ export default function CheckoutPage() {
                 <option value="">Choose your accommodation...</option>
                 <optgroup label="Cabins">
                   {ACCOMMODATIONS.filter(acc => acc.type === 'cabin').map(acc => (
-                    <option key={acc.id} value={acc.id}>{acc.name}</option>
+                    <option key={acc.id} value={acc.name}>{acc.name}</option>
                   ))}
                 </optgroup>
                 <optgroup label="Hardstanding Pitches">
                   {ACCOMMODATIONS.filter(acc => acc.type === 'pitch').map(acc => (
-                    <option key={acc.id} value={acc.id}>{acc.name}</option>
+                    <option key={acc.id} value={acc.name}>{acc.name}</option>
                   ))}
                 </optgroup>
               </select>
