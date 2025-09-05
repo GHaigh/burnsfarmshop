@@ -7,7 +7,6 @@ import {
   CurrencyPoundIcon,
   ShoppingBagIcon,
   UserGroupIcon,
-  ArrowTrendingUpIcon,
   ArrowTrendingDownIcon
 } from '@heroicons/react/24/outline';
 

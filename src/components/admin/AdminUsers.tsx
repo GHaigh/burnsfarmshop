@@ -5,12 +5,7 @@ import { User, UserInvitation } from '@/types';
 import { 
   PlusIcon, 
   EnvelopeIcon, 
-  UserIcon, 
-  ShieldCheckIcon,
-  ClockIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  TrashIcon
+  UserIcon
 } from '@heroicons/react/24/outline';
 
 interface AdminUsersProps {

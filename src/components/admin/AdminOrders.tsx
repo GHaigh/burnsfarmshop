@@ -4,13 +4,11 @@ import { useState } from 'react';
 import { Order } from '@/types';
 import { format } from 'date-fns';
 import { 
-  EyeIcon, 
   CheckCircleIcon, 
   XCircleIcon,
   ClockIcon,
   UserIcon,
-  MagnifyingGlassIcon,
-  FunnelIcon
+  MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 
 interface AdminOrdersProps {
