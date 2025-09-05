@@ -7,8 +7,8 @@ import {
   CurrencyPoundIcon,
   ShoppingBagIcon,
   UserGroupIcon,
-  TrendingUpIcon,
-  TrendingDownIcon
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon
 } from '@heroicons/react/24/outline';
 
 interface AdminAnalyticsProps {
@@ -243,7 +243,7 @@ export default function AdminAnalytics({ orders, products }: AdminAnalyticsProps
       {analytics.lowStockProducts.length > 0 && (
         <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-orange-800 mb-4 flex items-center">
-            <TrendingDownIcon className="w-5 h-5 mr-2" />
+            <ArrowTrendingDownIcon className="w-5 h-5 mr-2" />
             Low Stock Alert
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

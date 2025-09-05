@@ -197,6 +197,7 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
         <div className="text-sm text-gray-600">
           {filteredOrders.length} order{filteredOrders.length !== 1 ? 's' : ''} found
         </div>
+        </div>
       </div>
 
       {/* Orders Table */}

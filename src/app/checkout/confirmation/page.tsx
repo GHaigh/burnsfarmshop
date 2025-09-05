@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Order } from '@/types';
 
-export default function OrderConfirmationPage() {
+function OrderConfirmationContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId');
   const [order, setOrder] = useState<Order | null>(null);
@@ -39,7 +39,7 @@ export default function OrderConfirmationPage() {
         <div className="text-center">
           <div className="text-6xl mb-4">❌</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Order Not Found</h1>
-          <p className="text-gray-600 mb-8">We couldn't find the order you're looking for.</p>
+          <p className="text-gray-600 mb-8">We couldn&apos;t find the order you&apos;re looking for.</p>
           <Link
             href="/"
             className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
@@ -58,7 +58,7 @@ export default function OrderConfirmationPage() {
         <div className="text-6xl mb-4">✅</div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Order Confirmed!</h1>
         <p className="text-lg text-gray-600">
-          Thank you for your order. We'll send you a confirmation email shortly.
+          Thank you for your order. We&apos;ll send you a confirmation email shortly.
         </p>
       </div>
 
@@ -161,10 +161,10 @@ export default function OrderConfirmationPage() {
       <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
         <h3 className="text-lg font-semibold text-green-800 mb-2">What happens next?</h3>
         <ul className="text-green-700 space-y-1">
-          <li>• We'll prepare your order for delivery</li>
-          <li>• You'll receive an email confirmation shortly</li>
-          <li>• We'll deliver your order on {order.deliveryDate} between {order.deliverySlot}</li>
-          <li>• You'll receive SMS and email updates when your order is delivered</li>
+          <li>• We&apos;ll prepare your order for delivery</li>
+          <li>• You&apos;ll receive an email confirmation shortly</li>
+          <li>• We&apos;ll deliver your order on {order.deliveryDate} between {order.deliverySlot}</li>
+          <li>• You&apos;ll receive SMS and email updates when your order is delivered</li>
         </ul>
       </div>
 
@@ -184,5 +184,13 @@ export default function OrderConfirmationPage() {
         </button>
       </div>
     </div>
+  );
+}
+
+export default function OrderConfirmationPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OrderConfirmationContent />
+    </Suspense>
   );
 }

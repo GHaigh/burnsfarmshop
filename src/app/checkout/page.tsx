@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useCart } from '@/contexts/CartContext';
-import { ACCOMMODATIONS, DELIVERY_SLOTS, Customer } from '@/types';
+import { ACCOMMODATIONS, DELIVERY_SLOTS, Customer, Order, Product } from '@/types';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export default function CheckoutPage() {
-  const { state, dispatch } = useCart();
+  const { state } = useCart();
   const router = useRouter();
   
   const [customer, setCustomer] = useState<Customer>({
@@ -30,7 +30,7 @@ export default function CheckoutPage() {
     const existingOrders = JSON.parse(localStorage.getItem('burns-farm-orders') || '[]');
     const booked = new Set<string>();
     
-    existingOrders.forEach((order: any) => {
+    existingOrders.forEach((order: Order) => {
       if (order.deliveryDate && order.deliverySlot) {
         const slotKey = `${order.deliveryDate}-${order.deliverySlot}`;
         booked.add(slotKey);
@@ -127,7 +127,7 @@ export default function CheckoutPage() {
 
     // Update product stock levels
     const existingProducts = JSON.parse(localStorage.getItem('burns-farm-products') || '[]');
-    const updatedProducts = existingProducts.map((product: any) => {
+    const updatedProducts = existingProducts.map((product: Product) => {
       const orderItem = state.items.find(item => item.product.id === product.id);
       if (orderItem) {
         return {

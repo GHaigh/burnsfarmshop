@@ -139,7 +139,7 @@ export default function Home() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(MOCK_PRODUCTS);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const { state } = useCart();
+  const { } = useCart();
 
   useEffect(() => {
     // Load products from localStorage or use mock data

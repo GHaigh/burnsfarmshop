@@ -2,11 +2,12 @@
 
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { useCart } from '@/contexts/CartContext';
 import { useEffect } from 'react';
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId');
   const { dispatch } = useCart();
@@ -26,7 +27,7 @@ export default function CheckoutSuccessPage() {
         </h1>
         
         <p className="text-lg text-gray-600 mb-6">
-          Thank you for your order. Your payment has been processed and we'll prepare your items for delivery.
+          Thank you for your order. Your payment has been processed and we&apos;ll prepare your items for delivery.
         </p>
 
         {orderId && (
@@ -38,10 +39,10 @@ export default function CheckoutSuccessPage() {
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
           <h2 className="text-lg font-semibold text-green-800 mb-2">What happens next?</h2>
           <ul className="text-green-700 text-sm space-y-1 text-left">
-            <li>• We'll prepare your order for next morning delivery</li>
-            <li>• You'll receive a confirmation email shortly</li>
+            <li>• We&apos;ll prepare your order for next morning delivery</li>
+            <li>• You&apos;ll receive a confirmation email shortly</li>
             <li>• Your order will be delivered to your selected accommodation</li>
-            <li>• We'll contact you if we have any questions</li>
+            <li>• We&apos;ll contact you if we have any questions</li>
           </ul>
         </div>
 
@@ -59,5 +60,13 @@ export default function CheckoutSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }

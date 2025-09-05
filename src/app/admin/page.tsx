@@ -11,11 +11,10 @@ import {
   ShoppingBagIcon, 
   CubeIcon, 
   ChartBarIcon,
-  UserGroupIcon,
-  PlusIcon 
+  UserGroupIcon
 } from '@heroicons/react/24/outline';
 
-type AdminTab = 'orders' | 'products' | 'reports' | 'users';
+type AdminTab = 'orders' | 'products' | 'analytics' | 'reports' | 'users';
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<AdminTab>('orders');
@@ -33,7 +32,7 @@ export default function AdminPage() {
     const savedInvitations = JSON.parse(localStorage.getItem('burns-farm-invitations') || '[]');
     
     // Migrate old Unsplash URLs to Picsum
-    const updatedProducts = savedProducts.map((product: any) => {
+    const updatedProducts = savedProducts.map((product: Product) => {
       if (product.image && product.image.includes('images.unsplash.com')) {
         const randomId = Math.floor(Math.random() * 1000);
         return { ...product, image: `https://picsum.photos/300/200?random=${randomId}` };
@@ -75,7 +74,7 @@ export default function AdminPage() {
       setUsers(mockUsers);
       localStorage.setItem('burns-farm-users', JSON.stringify(mockUsers));
     } else {
-      setUsers(savedUsers.map((user: any) => ({
+      setUsers(savedUsers.map((user: User) => ({
         ...user,
         invitedAt: new Date(user.invitedAt),
         joinedAt: user.joinedAt ? new Date(user.joinedAt) : undefined,
@@ -83,7 +82,7 @@ export default function AdminPage() {
       })));
     }
 
-    setInvitations(savedInvitations.map((invitation: any) => ({
+          setInvitations(savedInvitations.map((invitation: UserInvitation) => ({
       ...invitation,
       invitedAt: new Date(invitation.invitedAt),
       expiresAt: new Date(invitation.expiresAt),
