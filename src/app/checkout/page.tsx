@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export default function CheckoutPage() {
-  const { state } = useCart();
+  const { state, dispatch } = useCart();
   const router = useRouter();
   
   const [customer, setCustomer] = useState<Customer>({
@@ -143,6 +143,9 @@ export default function CheckoutPage() {
     // Add this booking to the booked slots
     const slotKey = `${deliveryDate}-${deliverySlot}`;
     setBookedSlots(prev => new Set([...prev, slotKey]));
+
+    // Clear the cart after successful order creation
+    dispatch({ type: 'CLEAR_CART' });
 
     // Redirect to payment page
     router.push(`/checkout/payment?orderId=${order.id}&total=${order.total}`);
