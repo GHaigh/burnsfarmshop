@@ -29,8 +29,18 @@ export default function Home() {
     const savedProducts = localStorage.getItem('burns-farm-products');
     if (savedProducts) {
       const parsedProducts = JSON.parse(savedProducts);
-      setProducts(parsedProducts);
-      setFilteredProducts(parsedProducts);
+      // Check if we have the new seasonal products
+      const hasSeasonalProducts = parsedProducts.some((p: Product) => p.seasonal);
+      if (!hasSeasonalProducts) {
+        // Migrate to new products with seasonal data
+        console.log('Migrating to new seasonal products');
+        localStorage.setItem('burns-farm-products', JSON.stringify(MOCK_PRODUCTS));
+        setProducts(MOCK_PRODUCTS);
+        setFilteredProducts(MOCK_PRODUCTS);
+      } else {
+        setProducts(parsedProducts);
+        setFilteredProducts(parsedProducts);
+      }
     } else {
       // Save mock products to localStorage
       localStorage.setItem('burns-farm-products', JSON.stringify(MOCK_PRODUCTS));
@@ -80,9 +90,9 @@ export default function Home() {
   const getCurrentSeason = () => {
     const month = new Date().getMonth() + 1;
     if (month >= 6 && month <= 8) return 'summer';
-    if (month >= 12 || month <= 2) return 'winter';
-    if (month >= 3 && month <= 5) return 'spring';
-    return 'autumn';
+    if (month >= 12 || month <= 2 || month >= 9) return 'winter'; // Show winter in autumn/spring too
+    if (month >= 3 && month <= 5) return 'winter'; // Show winter in spring too
+    return 'winter'; // Default to winter
   };
 
   const currentSeason = getCurrentSeason();
@@ -164,6 +174,7 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
+                
               </div>
             </div>
           </div>

@@ -60,7 +60,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'summer',
   },
 
-  // Winter Collection
+  // Winter/Autumn Collection
   {
     id: '6',
     name: 'Hot Chocolate Kit',
@@ -72,6 +72,29 @@ export const MOCK_PRODUCTS: Product[] = [
     isActive: true,
     seasonal: 'winter',
     featured: true,
+  },
+  {
+    id: '23',
+    name: 'Pumpkin Spice Latte Kit',
+    description: 'Everything you need for perfect autumn lattes',
+    price: 7.50,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1572490122747-4328bd77d31c?w=300&h=200&fit=crop&crop=center',
+    stock: 8,
+    isActive: true,
+    seasonal: 'winter',
+    featured: true,
+  },
+  {
+    id: '24',
+    name: 'Apple Cider Mix',
+    description: 'Warming spiced apple cider for chilly evenings',
+    price: 5.00,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&h=200&fit=crop&crop=center',
+    stock: 12,
+    isActive: true,
+    seasonal: 'winter',
   },
   {
     id: '7',
