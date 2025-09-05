@@ -11,9 +11,11 @@ import ProductSearch from '@/components/ProductSearch';
 // Seasonal filter options
 const SEASONAL_FILTERS = [
   { id: 'all', name: 'All Products', color: 'bg-gray-500' },
+  { id: 'spring', name: 'Spring Awakening', color: 'bg-green-400' },
   { id: 'summer', name: 'Summer BBQ', color: 'bg-orange-500' },
+  { id: 'autumn', name: 'Autumn Harvest', color: 'bg-amber-600' },
   { id: 'winter', name: 'Winter Warmers', color: 'bg-blue-500' },
-  { id: 'all-year', name: 'All Year', color: 'bg-green-500' },
+  { id: 'all-year', name: 'All Year', color: 'bg-gray-500' },
 ];
 
 export default function Home() {
@@ -89,9 +91,10 @@ export default function Home() {
   // Get current season for featured products
   const getCurrentSeason = () => {
     const month = new Date().getMonth() + 1;
+    if (month >= 3 && month <= 5) return 'spring';
     if (month >= 6 && month <= 8) return 'summer';
-    if (month >= 12 || month <= 2 || month >= 9) return 'winter'; // Show winter in autumn/spring too
-    if (month >= 3 && month <= 5) return 'winter'; // Show winter in spring too
+    if (month >= 9 && month <= 11) return 'autumn';
+    if (month >= 12 || month <= 2) return 'winter';
     return 'winter'; // Default to winter
   };
 

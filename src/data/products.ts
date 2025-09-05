@@ -1,9 +1,69 @@
 import { Product } from '@/types';
 
 export const MOCK_PRODUCTS: Product[] = [
-  // Summer Collection - Featured
+  // Spring Collection - Featured
   {
     id: '1',
+    name: 'Easter Hot Cross Buns (6 pack)',
+    description: 'Traditional spiced buns with dried fruit, perfect for spring mornings',
+    price: 3.50,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop&crop=center',
+    stock: 15,
+    isActive: true,
+    seasonal: 'spring',
+    featured: true,
+  },
+  {
+    id: '2',
+    name: 'Fresh Asparagus Bundle',
+    description: 'Tender British asparagus, perfect for spring cooking',
+    price: 4.50,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=300&h=200&fit=crop&crop=center',
+    stock: 12,
+    isActive: true,
+    seasonal: 'spring',
+    featured: true,
+  },
+  {
+    id: '3',
+    name: 'Spring Herb Collection',
+    description: 'Fresh mint, chives, and parsley for spring cooking',
+    price: 3.00,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=200&fit=crop&crop=center',
+    stock: 8,
+    isActive: true,
+    seasonal: 'spring',
+  },
+  {
+    id: '4',
+    name: 'Easter Chocolate Selection',
+    description: 'Premium handcrafted Easter chocolates from local artisan',
+    price: 12.00,
+    category: 'gifts',
+    image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?w=300&h=200&fit=crop&crop=center',
+    stock: 10,
+    isActive: true,
+    seasonal: 'spring',
+    featured: true,
+  },
+  {
+    id: '5',
+    name: 'Handcrafted Easter Egg',
+    description: 'Beautifully decorated ceramic Easter egg by local potter',
+    price: 18.00,
+    category: 'gifts',
+    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=300&h=200&fit=crop&crop=center',
+    stock: 6,
+    isActive: true,
+    seasonal: 'spring',
+  },
+
+  // Summer Collection
+  {
+    id: '6',
     name: 'BBQ Burger Buns (6 pack)',
     description: 'Fresh brioche buns perfect for summer BBQs',
     price: 2.50,
@@ -15,7 +75,7 @@ export const MOCK_PRODUCTS: Product[] = [
     featured: true,
   },
   {
-    id: '2',
+    id: '7',
     name: 'Fresh Strawberries (500g)',
     description: 'Sweet British strawberries, perfect for summer desserts',
     price: 3.50,
@@ -27,7 +87,7 @@ export const MOCK_PRODUCTS: Product[] = [
     featured: true,
   },
   {
-    id: '3',
+    id: '8',
     name: 'Ice Cream Selection',
     description: 'Premium ice cream tubs - Vanilla, Chocolate, Strawberry',
     price: 4.50,
@@ -38,7 +98,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'summer',
   },
   {
-    id: '4',
+    id: '9',
     name: 'BBQ Sauce Collection',
     description: 'Three delicious BBQ sauces - Original, Spicy, Honey',
     price: 6.00,
@@ -49,7 +109,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'summer',
   },
   {
-    id: '5',
+    id: '10',
     name: 'Fresh Corn on the Cob',
     description: 'Sweet corn perfect for grilling or boiling',
     price: 1.50,
@@ -59,10 +119,80 @@ export const MOCK_PRODUCTS: Product[] = [
     isActive: true,
     seasonal: 'summer',
   },
-
-  // Winter/Autumn Collection
   {
-    id: '6',
+    id: '11',
+    name: 'Handcrafted BBQ Apron',
+    description: 'Locally made canvas apron with Lake District design',
+    price: 22.00,
+    category: 'gifts',
+    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=300&h=200&fit=crop&crop=center',
+    stock: 8,
+    isActive: true,
+    seasonal: 'summer',
+  },
+
+  // Autumn Collection
+  {
+    id: '12',
+    name: 'Pumpkin Spice Latte Kit',
+    description: 'Everything you need for perfect autumn lattes',
+    price: 7.50,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1572490122747-4328bd77d31c?w=300&h=200&fit=crop&crop=center',
+    stock: 8,
+    isActive: true,
+    seasonal: 'autumn',
+    featured: true,
+  },
+  {
+    id: '13',
+    name: 'Apple Cider Mix',
+    description: 'Warming spiced apple cider for chilly evenings',
+    price: 5.00,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&h=200&fit=crop&crop=center',
+    stock: 12,
+    isActive: true,
+    seasonal: 'autumn',
+  },
+  {
+    id: '14',
+    name: 'Halloween Lantern',
+    description: 'Handcrafted ceramic Halloween lantern by local potter',
+    price: 25.00,
+    category: 'gifts',
+    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&crop=center',
+    stock: 5,
+    isActive: true,
+    seasonal: 'autumn',
+    featured: true,
+  },
+  {
+    id: '15',
+    name: 'Autumn Harvest Basket',
+    description: 'Handwoven basket filled with seasonal produce',
+    price: 18.00,
+    category: 'gifts',
+    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=300&h=200&fit=crop&crop=center',
+    stock: 6,
+    isActive: true,
+    seasonal: 'autumn',
+  },
+  {
+    id: '16',
+    name: 'Pumpkin Carving Kit',
+    description: 'Professional tools for Halloween pumpkin carving',
+    price: 8.50,
+    category: 'gifts',
+    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&crop=center',
+    stock: 10,
+    isActive: true,
+    seasonal: 'autumn',
+  },
+
+  // Winter Collection
+  {
+    id: '17',
     name: 'Hot Chocolate Kit',
     description: 'Premium hot chocolate with marshmallows and whipped cream',
     price: 8.50,
@@ -74,30 +204,7 @@ export const MOCK_PRODUCTS: Product[] = [
     featured: true,
   },
   {
-    id: '23',
-    name: 'Pumpkin Spice Latte Kit',
-    description: 'Everything you need for perfect autumn lattes',
-    price: 7.50,
-    category: 'groceries',
-    image: 'https://images.unsplash.com/photo-1572490122747-4328bd77d31c?w=300&h=200&fit=crop&crop=center',
-    stock: 8,
-    isActive: true,
-    seasonal: 'winter',
-    featured: true,
-  },
-  {
-    id: '24',
-    name: 'Apple Cider Mix',
-    description: 'Warming spiced apple cider for chilly evenings',
-    price: 5.00,
-    category: 'groceries',
-    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&h=200&fit=crop&crop=center',
-    stock: 12,
-    isActive: true,
-    seasonal: 'winter',
-  },
-  {
-    id: '7',
+    id: '18',
     name: 'Mulled Wine Kit',
     description: 'Everything you need for perfect mulled wine',
     price: 12.00,
@@ -109,7 +216,7 @@ export const MOCK_PRODUCTS: Product[] = [
     featured: true,
   },
   {
-    id: '8',
+    id: '19',
     name: 'Hearty Stew Mix',
     description: 'Pre-cut vegetables and herbs for warming winter stews',
     price: 5.50,
@@ -120,7 +227,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'winter',
   },
   {
-    id: '9',
+    id: '20',
     name: 'Warm Blanket',
     description: 'Cozy fleece blanket perfect for chilly evenings',
     price: 18.00,
@@ -130,10 +237,32 @@ export const MOCK_PRODUCTS: Product[] = [
     isActive: true,
     seasonal: 'winter',
   },
+  {
+    id: '21',
+    name: 'Handcrafted Christmas Ornament',
+    description: 'Beautiful ceramic ornament by local artisan',
+    price: 15.00,
+    category: 'gifts',
+    image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?w=300&h=200&fit=crop&crop=center',
+    stock: 12,
+    isActive: true,
+    seasonal: 'winter',
+  },
+  {
+    id: '22',
+    name: 'Winter Spice Collection',
+    description: 'Cinnamon, nutmeg, and cloves for winter baking',
+    price: 6.50,
+    category: 'groceries',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=200&fit=crop&crop=center',
+    stock: 15,
+    isActive: true,
+    seasonal: 'winter',
+  },
 
   // All Year Essentials
   {
-    id: '10',
+    id: '23',
     name: 'Fresh Milk (1L)',
     description: 'Fresh whole milk from local dairy',
     price: 1.50,
@@ -144,7 +273,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '11',
+    id: '24',
     name: 'Free Range Eggs (6 pack)',
     description: 'Fresh free-range eggs from local farm',
     price: 2.50,
@@ -155,7 +284,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '12',
+    id: '25',
     name: 'Artisan Bread',
     description: 'Freshly baked sourdough bread',
     price: 3.00,
@@ -166,7 +295,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '13',
+    id: '26',
     name: 'Local Honey (250g)',
     description: 'Pure local honey from Lake District bees',
     price: 4.50,
@@ -177,7 +306,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '14',
+    id: '27',
     name: 'Organic Vegetables Box',
     description: 'Seasonal organic vegetables from local farms',
     price: 8.00,
@@ -190,7 +319,7 @@ export const MOCK_PRODUCTS: Product[] = [
 
   // Gifts
   {
-    id: '15',
+    id: '28',
     name: 'Lake District Mug',
     description: 'Ceramic mug with Lake District landscape',
     price: 12.00,
@@ -201,7 +330,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '16',
+    id: '29',
     name: 'Cumbrian Fudge Selection',
     description: 'Traditional fudge in three flavors - Vanilla, Chocolate, Caramel',
     price: 6.50,
@@ -212,7 +341,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '17',
+    id: '30',
     name: 'Local Craft Beer (4 pack)',
     description: 'Selection of local craft beers from Cumbrian breweries',
     price: 15.00,
@@ -223,7 +352,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '18',
+    id: '31',
     name: 'Lake District Tea',
     description: 'Premium loose leaf tea inspired by the Lake District',
     price: 9.50,
@@ -236,7 +365,7 @@ export const MOCK_PRODUCTS: Product[] = [
 
   // Essentials
   {
-    id: '19',
+    id: '32',
     name: 'Toilet Paper (4 pack)',
     description: 'Soft, strong toilet paper',
     price: 3.50,
@@ -247,7 +376,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '20',
+    id: '33',
     name: 'Shower Gel',
     description: 'Refreshing shower gel with natural ingredients',
     price: 4.00,
@@ -258,7 +387,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '21',
+    id: '34',
     name: 'Toothpaste',
     description: 'Fluoride toothpaste for healthy teeth',
     price: 2.50,
@@ -269,7 +398,7 @@ export const MOCK_PRODUCTS: Product[] = [
     seasonal: 'all-year',
   },
   {
-    id: '22',
+    id: '35',
     name: 'First Aid Kit',
     description: 'Essential first aid supplies for camping',
     price: 12.00,
@@ -282,12 +411,26 @@ export const MOCK_PRODUCTS: Product[] = [
 ];
 
 export const SEASONAL_COLLECTIONS = {
+  spring: {
+    name: 'Spring Awakening',
+    description: 'Fresh flavors and Easter treats',
+    color: 'bg-green-400',
+    textColor: 'text-green-700',
+    products: MOCK_PRODUCTS.filter(p => p.seasonal === 'spring'),
+  },
   summer: {
     name: 'Summer BBQ Collection',
     description: 'Perfect for outdoor cooking and warm weather',
     color: 'bg-orange-500',
     textColor: 'text-orange-600',
     products: MOCK_PRODUCTS.filter(p => p.seasonal === 'summer'),
+  },
+  autumn: {
+    name: 'Autumn Harvest',
+    description: 'Halloween treats and harvest delights',
+    color: 'bg-amber-600',
+    textColor: 'text-amber-700',
+    products: MOCK_PRODUCTS.filter(p => p.seasonal === 'autumn'),
   },
   winter: {
     name: 'Winter Warmers',
@@ -299,8 +442,8 @@ export const SEASONAL_COLLECTIONS = {
   'all-year': {
     name: 'All Year Essentials',
     description: 'Everyday items you need',
-    color: 'bg-green-500',
-    textColor: 'text-green-600',
+    color: 'bg-gray-500',
+    textColor: 'text-gray-700',
     products: MOCK_PRODUCTS.filter(p => p.seasonal === 'all-year'),
   },
 };
