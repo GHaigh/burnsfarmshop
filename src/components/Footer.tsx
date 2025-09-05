@@ -12,7 +12,7 @@ export default function Footer() {
                 <img
                   src="/burns-farm-logo.png"
                   alt="Burns Farm Logo"
-                  className="h-8 w-auto"
+                  className="h-12 w-auto"
                 />
               </div>
               <h3 className="text-xl font-bold">Shop</h3>

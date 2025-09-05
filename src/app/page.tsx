@@ -179,20 +179,6 @@ export default function Home() {
                       {filter.name}
                     </button>
                   ))}
-                  
-                  {/* Debug button - temporary */}
-                  <button
-                    onClick={() => {
-                      localStorage.removeItem('burns-farm-products');
-                      localStorage.setItem('burns-farm-products', JSON.stringify(MOCK_PRODUCTS));
-                      setProducts(MOCK_PRODUCTS);
-                      setFilteredProducts(MOCK_PRODUCTS);
-                      window.location.reload();
-                    }}
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600"
-                  >
-                    Clear & Reload
-                  </button>
                 </div>
                 
               </div>

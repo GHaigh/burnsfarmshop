@@ -12,14 +12,14 @@ export default function Header() {
   return (
     <header className="bg-green-600 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center space-x-3">
             <div className="px-2 py-1">
               <img
                 src="/burns-farm-logo.png"
                 alt="Burns Farm Logo"
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               /> 
             </div>
             <div className="hidden sm:block">
