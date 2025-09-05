@@ -12,6 +12,29 @@ function OrderConfirmationContent() {
   const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Format cabin names for display (remove hyphens, capitalize properly)
+  const formatCabinName = (accommodation: string) => {
+    // If it's already properly formatted (contains spaces), return as is
+    if (accommodation.includes(' ')) {
+      return accommodation;
+    }
+    
+    // If it's hyphenated (like "angle-tarn"), convert to proper format
+    return accommodation
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+  // Format date as DD-MM-YYYY
+  const formatDate = (dateInput: string | Date) => {
+    const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   useEffect(() => {
     if (orderId) {
       // Load order from localStorage
@@ -72,11 +95,11 @@ function OrderConfirmationContent() {
           </div>
           <div>
             <p className="text-sm text-gray-600">Order Date</p>
-            <p className="font-medium">{new Date(order.createdAt).toLocaleDateString()}</p>
+            <p className="font-medium">{formatDate(order.createdAt)}</p>
           </div>
           <div>
             <p className="text-sm text-gray-600">Delivery Date</p>
-            <p className="font-medium">{order.deliveryDate}</p>
+            <p className="font-medium">{formatDate(order.deliveryDate)}</p>
           </div>
           <div>
             <p className="text-sm text-gray-600">Delivery Time</p>
@@ -113,7 +136,7 @@ function OrderConfirmationContent() {
           </div>
           <div>
             <p className="text-sm text-gray-600">Accommodation</p>
-            <p className="font-medium">{order.customer.accommodation}</p>
+            <p className="font-medium">{formatCabinName(order.customer.accommodation)}</p>
           </div>
         </div>
         {order.notes && (
@@ -163,7 +186,7 @@ function OrderConfirmationContent() {
         <ul className="text-green-700 space-y-1">
           <li>• We&apos;ll prepare your order for delivery</li>
           <li>• You&apos;ll receive an email confirmation shortly</li>
-          <li>• We&apos;ll deliver your order on {order.deliveryDate} between {order.deliverySlot}</li>
+          <li>• We&apos;ll deliver your order on {formatDate(order.deliveryDate)} between {order.deliverySlot}</li>
           <li>• You&apos;ll receive SMS and email updates when your order is delivered</li>
         </ul>
       </div>
