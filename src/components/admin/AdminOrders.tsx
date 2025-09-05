@@ -129,6 +129,12 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
 
   // Format cabin names for display (remove hyphens, capitalize properly)
   const formatCabinName = (accommodation: string) => {
+    // If it's already properly formatted (contains spaces), return as is
+    if (accommodation.includes(' ')) {
+      return accommodation;
+    }
+    
+    // If it's hyphenated (like "angle-tarn"), convert to proper format
     return accommodation
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
@@ -282,7 +288,7 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                           {order.id}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {format(new Date(order.createdAt), 'MMM dd, yyyy HH:mm')}
+                          {formatDate(order.createdAt)} {format(new Date(order.createdAt), 'HH:mm')}
                         </div>
                       </div>
                     </td>

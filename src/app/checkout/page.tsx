@@ -99,7 +99,7 @@ export default function CheckoutPage() {
     
     setCustomer(prev => ({
       ...prev,
-      accommodation: accommodationId,
+      accommodation: accommodation?.name || accommodationId, // Store the proper name instead of ID
       accommodationType: accommodation?.type || 'cabin'
     }));
   };
