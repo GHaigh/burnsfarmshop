@@ -31,11 +31,14 @@ export default function Home() {
     const savedProducts = localStorage.getItem('burns-farm-products');
     if (savedProducts) {
       const parsedProducts = JSON.parse(savedProducts);
-      // Check if we have the new seasonal products
-      const hasSeasonalProducts = parsedProducts.some((p: Product) => p.seasonal);
-      if (!hasSeasonalProducts) {
-        // Migrate to new products with seasonal data
-        console.log('Migrating to new seasonal products');
+      // Check if we have the new seasonal products with all 4 seasons
+      const hasAllSeasons = ['spring', 'summer', 'autumn', 'winter'].every(season => 
+        parsedProducts.some((p: Product) => p.seasonal === season)
+      );
+      
+      if (!hasAllSeasons || parsedProducts.length < 30) {
+        // Migrate to new products with complete seasonal data
+        console.log('Migrating to complete seasonal products');
         localStorage.setItem('burns-farm-products', JSON.stringify(MOCK_PRODUCTS));
         setProducts(MOCK_PRODUCTS);
         setFilteredProducts(MOCK_PRODUCTS);
