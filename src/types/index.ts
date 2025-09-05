@@ -7,6 +7,8 @@ export interface Product {
   image: string;
   stock: number;
   isActive: boolean;
+  seasonal?: 'summer' | 'winter' | 'spring' | 'autumn' | 'all-year';
+  featured?: boolean;
 }
 
 export interface CartItem {

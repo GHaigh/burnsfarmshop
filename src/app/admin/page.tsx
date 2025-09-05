@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Order, Product, User, UserInvitation } from '@/types';
+import { MOCK_PRODUCTS } from '@/data/products';
 import AdminOrders from '@/components/admin/AdminOrders';
 import AdminProducts from '@/components/admin/AdminProducts';
 import AdminReports from '@/components/admin/AdminReports';
@@ -31,18 +32,10 @@ export default function AdminPage() {
     const savedUsers = JSON.parse(localStorage.getItem('burns-farm-users') || '[]');
     const savedInvitations = JSON.parse(localStorage.getItem('burns-farm-invitations') || '[]');
     
-    // Migrate old Unsplash URLs to Picsum
-    const updatedProducts = savedProducts.map((product: Product) => {
-      if (product.image && product.image.includes('images.unsplash.com')) {
-        const randomId = Math.floor(Math.random() * 1000);
-        return { ...product, image: `https://picsum.photos/300/200?random=${randomId}` };
-      }
-      return product;
-    });
-    
-    if (JSON.stringify(updatedProducts) !== JSON.stringify(savedProducts)) {
-      localStorage.setItem('burns-farm-products', JSON.stringify(updatedProducts));
-      savedProducts = updatedProducts;
+    // Use new products if none saved or if we want to update
+    if (savedProducts.length === 0) {
+      savedProducts = MOCK_PRODUCTS;
+      localStorage.setItem('burns-farm-products', JSON.stringify(MOCK_PRODUCTS));
     }
     
     // If no users saved, use mock data
