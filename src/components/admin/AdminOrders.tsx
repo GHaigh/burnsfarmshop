@@ -272,9 +272,9 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                       <div className="flex space-x-2">
                         <button
                           onClick={() => setSelectedOrder(order)}
-                          className="text-green-600 hover:text-green-900"
+                          className="text-green-600 hover:text-green-900 text-xs font-medium px-2 py-1 border border-green-300 rounded hover:bg-green-50"
                         >
-                          <EyeIcon className="w-4 h-4" />
+                          View Details
                         </button>
                         <select
                           value={order.status}
@@ -318,16 +318,30 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
       {/* Order Details Modal */}
       {selectedOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto print:max-w-none print:max-h-none print:shadow-none print:rounded-none">
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold">Order Details</h3>
-                <button
-                  onClick={() => setSelectedOrder(null)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <XCircleIcon className="w-6 h-6" />
-                </button>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => window.print()}
+                    className="px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
+                  >
+                    Print Packing Slip
+                  </button>
+                  <button
+                    onClick={() => setSelectedOrder(null)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <XCircleIcon className="w-6 h-6" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Print Header - Only visible when printing */}
+              <div className="hidden print:block print:mb-6 print:border-b print:pb-4">
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Burns Farm Shop - Packing Slip</h1>
+                <p className="text-gray-600">Order #{selectedOrder.id} • {new Date(selectedOrder.createdAt).toLocaleDateString()}</p>
               </div>
 
               <div className="space-y-4">
