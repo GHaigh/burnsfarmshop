@@ -5,12 +5,14 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Order } from '@/types';
+import { useCart } from '@/contexts/CartContext';
 
 function OrderConfirmationContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId');
   const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { dispatch } = useCart();
 
   // Format cabin names for display (remove hyphens, capitalize properly)
   const formatCabinName = (accommodation: string) => {
@@ -42,8 +44,11 @@ function OrderConfirmationContent() {
       const foundOrder = orders.find((o: Order) => o.id === orderId);
       setOrder(foundOrder || null);
       setIsLoading(false);
+      
+      // Clear the basket when order confirmation loads
+      dispatch({ type: 'CLEAR_CART' });
     }
-  }, [orderId]);
+  }, [orderId, dispatch]);
 
   if (isLoading) {
     return (
