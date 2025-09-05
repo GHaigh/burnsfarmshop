@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Burns Farm Shop - Campsite Groceries & Gifts",
-  description: "Order groceries and gifts for delivery to your cabin or pitch at Burns Farm Caravan & Campsite, St Johns-in-the-Vale, Keswick, Cumbria",
+  description: "Order groceries and gifts for hand delivery to your cabin or hard standing pitch at Burns Farm Caravan & Campsite, St Johns-in-the-Vale, Keswick, Cumbria",
   keywords: "campsite, groceries, gifts, delivery, Burns Farm, Lake District, Keswick, Cumbria, St Johns-in-the-Vale",
 };
 

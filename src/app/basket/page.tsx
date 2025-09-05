@@ -165,7 +165,7 @@ export default function BasketPage() {
 
             <div className="mt-6 p-4 bg-green-50 rounded-lg">
               <p className="text-green-800 text-sm">
-                <strong>Free delivery</strong> to all cabins and pitches. 
+                <strong>Hand delivered</strong> to your cabin or hard standing pitch. 
                 Next day delivery only • Order by 7 PM.
               </p>
             </div>

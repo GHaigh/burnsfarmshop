@@ -180,14 +180,14 @@ export default function Home() {
           Welcome to Burns Farm Shop
         </h1>
         <p className="text-xl text-gray-600 mb-4">
-          Order groceries and gifts for delivery to your cabin or pitch
+          Order groceries and gifts for hand delivery to your cabin or hard standing pitch
         </p>
         <div className="text-gray-500 text-sm mb-6">
           <p>Burns Farm Caravan & Campsite • St Johns-in-the-Vale, Keswick, Cumbria CA12 4RR</p>
         </div>
         <div className="bg-green-100 border border-green-200 rounded-lg p-4 max-w-2xl mx-auto">
           <p className="text-green-800 font-medium">
-            🚶‍♂️ Free delivery to all cabins and pitches • Next day delivery only • Order by 7 PM
+            🚶‍♂️ Hand delivered to your cabin or hard standing pitch • Next day delivery only • Order by 7 PM
           </p>
         </div>
       </div>
