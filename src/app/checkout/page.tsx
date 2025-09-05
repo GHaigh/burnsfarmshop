@@ -51,14 +51,15 @@ export default function CheckoutPage() {
     return bookedSlots.has(slotKey);
   };
 
-  // Generate delivery date options (today + up to 7 days)
+  // Generate delivery date options (next day + up to 7 days)
   const getDeliveryDateOptions = () => {
     const options = [];
     const now = new Date();
     const currentHour = now.getHours();
     const isAfter7PM = currentHour >= 19; // 7:00 PM
     
-    for (let i = 0; i <= 7; i++) {
+    // Start from tomorrow (i = 1) instead of today (i = 0)
+    for (let i = 1; i <= 7; i++) {
       const date = new Date(now);
       date.setDate(now.getDate() + i);
       
@@ -71,8 +72,8 @@ export default function CheckoutPage() {
       });
       
       // If it's after 7 PM and this is tomorrow (i === 1), disable it
-      // If it's very early morning (before 6 AM) and this is today (i === 0), disable it
-      const isDisabled = (isAfter7PM && i === 1) || (currentHour < 6 && i === 0);
+      // Same-day delivery (i === 0) is never allowed
+      const isDisabled = (isAfter7PM && i === 1);
       
       options.push({ 
         value: dateString, 
@@ -357,6 +358,9 @@ export default function CheckoutPage() {
             <div className="p-4 bg-green-50 rounded-lg">
               <p className="text-green-800 text-sm">
                 <strong>Next day delivery:</strong> Orders placed before 7 PM will be delivered the following morning.
+              </p>
+              <p className="text-green-700 text-sm mt-1">
+                <strong>Same-day delivery:</strong> Not available. All orders are delivered the next day or later.
               </p>
               <p className="text-green-700 text-sm mt-1">
                 <strong>Note:</strong> Booked time slots are not available for selection.
