@@ -7,7 +7,9 @@ import {
   CurrencyPoundIcon,
   ShoppingBagIcon,
   UserGroupIcon,
-  ArrowTrendingDownIcon
+  ArrowTrendingDownIcon,
+  ClockIcon,
+  XCircleIcon
 } from '@heroicons/react/24/outline';
 
 interface AdminAnalyticsProps {
@@ -25,6 +27,14 @@ export default function AdminAnalytics({ orders, products }: AdminAnalyticsProps
     ordersByStatus: {} as Record<string, number>,
     revenueByDay: [] as { date: string; revenue: number }[],
     lowStockProducts: [] as Product[],
+    outOfStockProducts: [] as Product[],
+    peakHour: 0,
+    hourlyOrders: [] as number[],
+    customerInsights: {
+      newCustomers: 0,
+      returningCustomers: 0,
+      averageOrderFrequency: 0
+    }
   });
 
   useEffect(() => {
@@ -98,8 +108,29 @@ export default function AdminAnalytics({ orders, products }: AdminAnalyticsProps
       .map(([date, revenue]) => ({ date, revenue }))
       .sort((a, b) => a.date.localeCompare(b.date));
 
-    // Find low stock products
+    // Find low stock and out of stock products
     const lowStockProducts = products.filter(product => product.stock <= 5 && product.stock > 0);
+    const outOfStockProducts = products.filter(product => product.stock === 0);
+
+    // Calculate peak hours
+    const hourlyOrders = Array(24).fill(0);
+    filteredOrders.forEach(order => {
+      const hour = new Date(order.createdAt).getHours();
+      hourlyOrders[hour]++;
+    });
+    const peakHour = hourlyOrders.indexOf(Math.max(...hourlyOrders));
+
+    // Calculate customer insights
+    const uniqueCustomers = new Set(filteredOrders.map(order => order.customer.email));
+    const customerOrderCounts = new Map<string, number>();
+    filteredOrders.forEach(order => {
+      const count = customerOrderCounts.get(order.customer.email) || 0;
+      customerOrderCounts.set(order.customer.email, count + 1);
+    });
+    
+    const returningCustomers = Array.from(customerOrderCounts.values()).filter(count => count > 1).length;
+    const newCustomers = uniqueCustomers.size - returningCustomers;
+    const averageOrderFrequency = uniqueCustomers.size > 0 ? filteredOrders.length / uniqueCustomers.size : 0;
 
     setAnalytics({
       totalRevenue,
@@ -109,6 +140,14 @@ export default function AdminAnalytics({ orders, products }: AdminAnalyticsProps
       ordersByStatus,
       revenueByDay: revenueByDayArray,
       lowStockProducts,
+      outOfStockProducts,
+      peakHour,
+      hourlyOrders,
+      customerInsights: {
+        newCustomers,
+        returningCustomers,
+        averageOrderFrequency
+      }
     });
   };
 
@@ -193,6 +232,99 @@ export default function AdminAnalytics({ orders, products }: AdminAnalyticsProps
           </div>
         </div>
       </div>
+
+      {/* Enhanced Analytics Widgets */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Peak Hour */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <ClockIcon className="w-6 h-6 text-purple-600" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Peak Hour</p>
+              <p className="text-2xl font-bold text-gray-900">{analytics.peakHour}:00</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Out of Stock */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center">
+            <div className="p-2 bg-red-100 rounded-lg">
+              <XCircleIcon className="w-6 h-6 text-red-600" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Out of Stock</p>
+              <p className="text-2xl font-bold text-gray-900">{analytics.outOfStockProducts.length}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* New Customers */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center">
+            <div className="p-2 bg-green-100 rounded-lg">
+              <UserGroupIcon className="w-6 h-6 text-green-600" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">New Customers</p>
+              <p className="text-2xl font-bold text-gray-900">{analytics.customerInsights.newCustomers}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Returning Customers */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <UserGroupIcon className="w-6 h-6 text-blue-600" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Returning Customers</p>
+              <p className="text-2xl font-bold text-gray-900">{analytics.customerInsights.returningCustomers}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Inventory Alerts */}
+      {(analytics.lowStockProducts.length > 0 || analytics.outOfStockProducts.length > 0) && (
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <span className="text-red-500 mr-2">⚠️</span>
+            Inventory Alerts
+          </h3>
+          
+          {analytics.outOfStockProducts.length > 0 && (
+            <div className="mb-4">
+              <h4 className="text-md font-medium text-red-700 mb-2">Out of Stock ({analytics.outOfStockProducts.length})</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                {analytics.outOfStockProducts.map(product => (
+                  <div key={product.id} className="bg-red-50 border border-red-200 rounded-lg p-3">
+                    <p className="font-medium text-red-800">{product.name}</p>
+                    <p className="text-sm text-red-600">Stock: 0 units</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {analytics.lowStockProducts.length > 0 && (
+            <div>
+              <h4 className="text-md font-medium text-orange-700 mb-2">Low Stock ({analytics.lowStockProducts.length})</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                {analytics.lowStockProducts.map(product => (
+                  <div key={product.id} className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                    <p className="font-medium text-orange-800">{product.name}</p>
+                    <p className="text-sm text-orange-600">Stock: {product.stock} units</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Products */}

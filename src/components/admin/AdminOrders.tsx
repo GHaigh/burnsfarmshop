@@ -8,7 +8,10 @@ import {
   XCircleIcon,
   ClockIcon,
   UserIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  ChatBubbleLeftRightIcon
 } from '@heroicons/react/24/outline';
 
 interface AdminOrdersProps {
@@ -40,6 +43,9 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
   const [searchQuery, setSearchQuery] = useState('');
   const [dateFilter, setDateFilter] = useState('all');
   const [notificationStatus, setNotificationStatus] = useState<{ [orderId: string]: 'sending' | 'sent' | null }>({});
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [messageText, setMessageText] = useState('');
+  const [messageType, setMessageType] = useState<'email' | 'sms'>('email');
 
   // Mock notification functions (in a real app, these would call actual APIs)
   const sendDeliveryConfirmation = async (order: Order) => {
@@ -95,6 +101,30 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
         sendDeliveryConfirmation(order);
       }
     }
+  };
+
+  const sendCustomerMessage = async (order: Order) => {
+    if (!messageText.trim()) return;
+
+    setNotificationStatus(prev => ({ ...prev, [order.id]: 'sending' }));
+
+    // Mock sending message
+    setTimeout(() => {
+      console.log(`Sending ${messageType} to ${order.customer.email}:`, messageText);
+      setNotificationStatus(prev => ({ ...prev, [order.id]: 'sent' }));
+      setShowMessageModal(false);
+      setMessageText('');
+      
+      // Clear status after 3 seconds
+      setTimeout(() => {
+        setNotificationStatus(prev => ({ ...prev, [order.id]: null }));
+      }, 3000);
+    }, 1000);
+  };
+
+  const openMessageModal = (order: Order) => {
+    setSelectedOrder(order);
+    setShowMessageModal(true);
   };
 
   const filteredOrders = orders.filter(order => {
@@ -274,6 +304,30 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                         >
                           View Details
                         </button>
+                        <button
+                          onClick={() => openMessageModal(order)}
+                          className="text-blue-600 hover:text-blue-900 text-xs font-medium px-2 py-1 border border-blue-300 rounded hover:bg-blue-50 flex items-center"
+                          title="Send message to customer"
+                        >
+                          <ChatBubbleLeftRightIcon className="w-3 h-3 mr-1" />
+                          Message
+                        </button>
+                        <a
+                          href={`mailto:${order.customer.email}`}
+                          className="text-purple-600 hover:text-purple-900 text-xs font-medium px-2 py-1 border border-purple-300 rounded hover:bg-purple-50 flex items-center"
+                          title="Send email"
+                        >
+                          <EnvelopeIcon className="w-3 h-3 mr-1" />
+                          Email
+                        </a>
+                        <a
+                          href={`tel:${order.customer.phone}`}
+                          className="text-orange-600 hover:text-orange-900 text-xs font-medium px-2 py-1 border border-orange-300 rounded hover:bg-orange-50 flex items-center"
+                          title="Call customer"
+                        >
+                          <PhoneIcon className="w-3 h-3 mr-1" />
+                          Call
+                        </a>
                         <select
                           value={order.status}
                           onChange={(e) => updateOrderStatus(order.id, e.target.value as Order['status'])}
@@ -395,6 +449,72 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Message Modal */}
+      {showMessageModal && selectedOrder && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Send Message to Customer
+            </h3>
+            
+            <div className="mb-4">
+              <p className="text-sm text-gray-600 mb-2">
+                <strong>Customer:</strong> {selectedOrder.customer.firstName} {selectedOrder.customer.lastName}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Order:</strong> {selectedOrder.id}
+              </p>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Message Type
+              </label>
+              <select
+                value={messageType}
+                onChange={(e) => setMessageType(e.target.value as 'email' | 'sms')}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              >
+                <option value="email">Email</option>
+                <option value="sms">SMS</option>
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Message
+              </label>
+              <textarea
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                placeholder="Type your message here..."
+              />
+            </div>
+
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => {
+                  setShowMessageModal(false);
+                  setMessageText('');
+                }}
+                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => sendCustomerMessage(selectedOrder)}
+                disabled={!messageText.trim() || notificationStatus[selectedOrder.id] === 'sending'}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                {notificationStatus[selectedOrder.id] === 'sending' ? 'Sending...' : 'Send Message'}
+              </button>
             </div>
           </div>
         </div>

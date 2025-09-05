@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Product } from '@/types';
-import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, PencilIcon, TrashIcon, ArrowDownTrayIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 
 interface AdminProductsProps {
@@ -13,6 +13,9 @@ interface AdminProductsProps {
 export default function AdminProducts({ products, onUpdateProducts }: AdminProductsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
+  const [bulkAction, setBulkAction] = useState<string>('');
+  const [showBulkActions, setShowBulkActions] = useState(false);
   const [formData, setFormData] = useState<Partial<Product>>({
     name: '',
     description: '',
@@ -124,18 +127,204 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
     essentials: 'bg-blue-100 text-blue-800',
   };
 
+  // Bulk management functions
+  const handleSelectProduct = (productId: string) => {
+    const newSelected = new Set(selectedProducts);
+    if (newSelected.has(productId)) {
+      newSelected.delete(productId);
+    } else {
+      newSelected.add(productId);
+    }
+    setSelectedProducts(newSelected);
+    setShowBulkActions(newSelected.size > 0);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedProducts.size === products.length) {
+      setSelectedProducts(new Set());
+      setShowBulkActions(false);
+    } else {
+      setSelectedProducts(new Set(products.map(p => p.id)));
+      setShowBulkActions(true);
+    }
+  };
+
+  const handleBulkAction = () => {
+    if (!bulkAction || selectedProducts.size === 0) return;
+
+    const updatedProducts = products.map(product => {
+      if (selectedProducts.has(product.id)) {
+        switch (bulkAction) {
+          case 'activate':
+            return { ...product, isActive: true };
+          case 'deactivate':
+            return { ...product, isActive: false };
+          case 'delete':
+            return null;
+          case 'setStock':
+            const newStock = prompt(`Set stock for ${product.name}:`, product.stock.toString());
+            if (newStock !== null) {
+              return { ...product, stock: parseInt(newStock) || 0 };
+            }
+            return product;
+          default:
+            return product;
+        }
+      }
+      return product;
+    }).filter(Boolean) as Product[];
+
+    onUpdateProducts(updatedProducts);
+    setSelectedProducts(new Set());
+    setShowBulkActions(false);
+    setBulkAction('');
+  };
+
+  const exportProducts = () => {
+    const csvContent = [
+      ['Name', 'Description', 'Price', 'Category', 'Stock', 'Active', 'Image URL'],
+      ...products.map(product => [
+        product.name,
+        product.description,
+        product.price.toString(),
+        product.category,
+        product.stock.toString(),
+        product.isActive.toString(),
+        product.image
+      ])
+    ].map(row => row.map(field => `"${field}"`).join(',')).join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'products.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportProducts = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const csv = e.target?.result as string;
+        const lines = csv.split('\n');
+        // const headers = lines[0].split(',').map(h => h.replace(/"/g, ''));
+        
+        const importedProducts: Product[] = lines.slice(1)
+          .filter(line => line.trim())
+          .map((line, index) => {
+            const values = line.split(',').map(v => v.replace(/"/g, ''));
+            return {
+              id: `imported-${Date.now()}-${index}`,
+              name: values[0] || '',
+              description: values[1] || '',
+              price: parseFloat(values[2]) || 0,
+              category: values[3] as 'groceries' | 'gifts' | 'essentials' || 'groceries',
+              stock: parseInt(values[4]) || 0,
+              isActive: values[5] === 'true',
+              image: values[6] || ''
+            };
+          });
+
+        onUpdateProducts([...products, ...importedProducts]);
+        alert(`Successfully imported ${importedProducts.length} products`);
+      } catch (error) {
+        alert('Error importing products. Please check the CSV format.');
+        console.error('Import error:', error);
+      }
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-gray-900">Products</h2>
-        <button
-          onClick={handleAddProduct}
-          className="inline-flex items-center px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
-        >
-          <PlusIcon className="w-4 h-4 mr-2" />
-          Add Product
-        </button>
+        <div className="flex space-x-2">
+          <button
+            onClick={exportProducts}
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
+            Export CSV
+          </button>
+          <label className="inline-flex items-center px-4 py-2 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors cursor-pointer">
+            <ArrowUpTrayIcon className="w-4 h-4 mr-2" />
+            Import CSV
+            <input
+              type="file"
+              accept=".csv"
+              onChange={handleImportProducts}
+              className="hidden"
+            />
+          </label>
+          <button
+            onClick={handleAddProduct}
+            className="inline-flex items-center px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <PlusIcon className="w-4 h-4 mr-2" />
+            Add Product
+          </button>
+        </div>
+      </div>
+
+      {/* Bulk Actions */}
+      {showBulkActions && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <span className="text-sm font-medium text-blue-800">
+                {selectedProducts.size} product{selectedProducts.size !== 1 ? 's' : ''} selected
+              </span>
+              <select
+                value={bulkAction}
+                onChange={(e) => setBulkAction(e.target.value)}
+                className="px-3 py-1 border border-blue-300 rounded-md text-sm"
+              >
+                <option value="">Select action...</option>
+                <option value="activate">Activate</option>
+                <option value="deactivate">Deactivate</option>
+                <option value="setStock">Set Stock</option>
+                <option value="delete">Delete</option>
+              </select>
+              <button
+                onClick={handleBulkAction}
+                disabled={!bulkAction}
+                className="px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                Apply
+              </button>
+            </div>
+            <button
+              onClick={() => {
+                setSelectedProducts(new Set());
+                setShowBulkActions(false);
+                setBulkAction('');
+              }}
+              className="text-blue-600 hover:text-blue-800 text-sm"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Select All */}
+      <div className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          checked={selectedProducts.size === products.length && products.length > 0}
+          onChange={handleSelectAll}
+          className="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500"
+        />
+        <label className="text-sm font-medium text-gray-700">
+          Select All ({products.length} products)
+        </label>
       </div>
 
       {/* Products Grid */}
@@ -143,6 +332,15 @@ export default function AdminProducts({ products, onUpdateProducts }: AdminProdu
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="relative h-48 bg-gray-200">
+              {/* Bulk selection checkbox */}
+              <div className="absolute top-2 left-2 z-10">
+                <input
+                  type="checkbox"
+                  checked={selectedProducts.has(product.id)}
+                  onChange={() => handleSelectProduct(product.id)}
+                  className="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500"
+                />
+              </div>
               <Image
                 src={product.image}
                 alt={product.name}
