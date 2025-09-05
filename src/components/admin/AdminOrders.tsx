@@ -127,6 +127,23 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
     setShowMessageModal(true);
   };
 
+  // Format cabin names for display (remove hyphens, capitalize properly)
+  const formatCabinName = (accommodation: string) => {
+    return accommodation
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+  // Format date as DD-MM-YYYY
+  const formatDate = (dateInput: string | Date) => {
+    const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   const filteredOrders = orders.filter(order => {
     // Status filter
     if (statusFilter !== 'all' && order.status !== statusFilter) {
@@ -281,10 +298,10 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {order.customer.accommodation}
+                        {formatCabinName(order.customer.accommodation)}
                       </div>
                       <div className="text-sm text-gray-500">
-                        {order.deliveryDate} - {order.deliverySlot}
+                        {formatDate(order.deliveryDate)} - {order.deliverySlot}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -393,7 +410,7 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
               {/* Print Header - Only visible when printing */}
               <div className="hidden print:block print:mb-6 print:border-b print:pb-4">
                 <h1 className="text-2xl font-bold text-gray-900 mb-2">Burns Farm Shop - Packing Slip</h1>
-                <p className="text-gray-600">Order #{selectedOrder.id} • {new Date(selectedOrder.createdAt).toLocaleDateString()}</p>
+                <p className="text-gray-600">Order #{selectedOrder.id} • {formatDate(selectedOrder.createdAt)}</p>
               </div>
 
               <div className="space-y-4">
@@ -419,8 +436,8 @@ export default function AdminOrders({ orders, onUpdateOrders }: AdminOrdersProps
 
                 <div>
                   <label className="text-sm font-medium text-gray-500">Delivery</label>
-                  <p className="text-sm">{selectedOrder.customer.accommodation}</p>
-                  <p className="text-sm text-gray-600">{selectedOrder.deliveryDate} - {selectedOrder.deliverySlot}</p>
+                  <p className="text-sm">{formatCabinName(selectedOrder.customer.accommodation)}</p>
+                  <p className="text-sm text-gray-600">{formatDate(selectedOrder.deliveryDate)} - {selectedOrder.deliverySlot}</p>
                 </div>
 
                 <div>
